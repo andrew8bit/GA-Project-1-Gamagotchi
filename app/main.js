@@ -41,7 +41,7 @@ const player = {
     speed: 20,
     // added this jumping boolean so we can force it to only jump once. 
     jumping:'false',
-    gravity: 1
+    gravity: 4
     
 }
 
@@ -68,8 +68,10 @@ const detectWalls = () => {
 
 // We are going to detect the floors because character keeps falling when adding gravity 
 const detectFloor = () => {
-    if (player.y > gameScreen.height - 50) {
+    if (player.y > gameScreen.height - 150) {
         player.y = gameScreen.height - 150
+        player.jumping  = 'false'
+        player.dy = 0
     }
 }
 
@@ -94,6 +96,7 @@ const clear = () => {
 const newPos = () => {
     player.x += player.dx;
     player.y += player.dy;
+    player.y += player.gravity
     
     detectWalls();
     detectFloor();
@@ -109,7 +112,8 @@ const update = () => {
     drawPlayer();
 
     newPos();
-    player.dy += player.gravity
+
+ 
 
     requestAnimationFrame(update);
     // testing to see if our update function is looping properly
@@ -132,7 +136,8 @@ const moveLeft = () => {
 }
 
 const jump = () => {
-    player.dy -= player.speed
+    player.dy -= player.speed 
+    player.jumping = 'true'
 }
 
 // we use the event, because we want to target the key the user input
@@ -149,6 +154,7 @@ const keyDown = (e) => {
     } else if (e.key === 'ArrowUp' && player.jumping === 'false' || e.key === 'w' && player.jumping === 'false') {
         // we want this function to run on the key press and the state of the player is not currently jumping, to avoid jumping in the air. 
         jump();
+
         
     }
 }
@@ -163,6 +169,8 @@ const keyUp = (e) => {
     ) {
         player.dx = 0;
         player.dy = 0;
+        
+        
     }
 }
 
