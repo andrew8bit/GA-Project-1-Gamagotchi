@@ -38,7 +38,9 @@ const player = {
     dx: 0,
     dy: 0,
     // added a speed value so we can update our position in our controller section.
-    speed: 3
+    speed: 20,
+    // added this jumping boolean so we can force it to only jump once. 
+    jumping:'false',
     
 }
 
@@ -120,9 +122,9 @@ const moveLeft = () => {
     player.dx -= player.speed
 }
 
-// const jump = () => {
-
-// }
+const jump = () => {
+    player.dy -= player.speed
+}
 
 // we use the event, because we want to target the key the user input
 const keyDown = (e) => {
@@ -134,10 +136,11 @@ const keyDown = (e) => {
         moveRight();
     } else if (e.key === 'ArrowLeft' || e.key === 'a') {
         moveLeft();
-    } 
-    //     else if (e.key === 'ArrowUp' || e.key === 'w') {
-    //     jump()
-    // }
+
+    } else if (e.key === 'ArrowUp' && player.jumping === 'false' || e.key === 'w' && player.jumping === 'false') {
+        // we want this function to run on the key press and the state of the player is not currently jumping, to avoid jumping in the air. 
+        jump();
+    }
 }
 const keyUp = (e) => {
     // testing to see if we get an input in our console.
