@@ -38,10 +38,10 @@ const player = {
     dx: 0,
     dy: 0,
     // added a speed value so we can update our position in our controller section.
-    speed: 20,
+    speed: 15,
     // added this jumping boolean so we can force it to only jump once. 
     jumping:'false',
-    gravity: 4
+    gravity: 6
     
 }
 
@@ -75,6 +75,15 @@ const detectFloor = () => {
     }
 }
 
+// We are going to create an invisible ceiling for our character to prevent us from holding the up key and flying.
+// I do not know if this is a smart work around. 
+const jumpCeiling = () => {
+    if (player.y < gameScreen.height * (1/3)) {
+        player.y = gameScreen.height * (1/3)
+        player.jumping = 'true'
+    }
+}
+
 
 
 
@@ -100,6 +109,7 @@ const newPos = () => {
     
     detectWalls();
     detectFloor();
+    jumpCeiling();
 }
 
 
