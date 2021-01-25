@@ -2,6 +2,7 @@
 const gameScreen = document.querySelector("#gameScreen");
 gameScreen.width = 800;
 gameScreen.height = 500;
+// ctx is short for context - standard practice. 
 const ctx = gameScreen.getContext('2d');
 
 const playerImage = document.querySelector("#gatchiPlayer")
@@ -42,10 +43,24 @@ const drawPlayer = () => {
 
 }
 
-// this function updates the screen with out character. This important to look at since it deals with timing in our game,
+// these functions updates the screen without our character. This important to look at since it deals with timing in our game,
 // we want out gamescreen to update constantly. 
+
+const clearRect = () => {
+    ctx.clearRect(0,0, gameScreen.width, gameScreen.height)
+}
+const clear = () => {
+    clearRect(0,0, gameScreen.width, gameScreen.height)
+}
+
 const update = () => {
-    drawPlayer()
+    clear();  
+
+    drawPlayer();
+
+    requestAnimationFrame(update);
+    // testing to see if our update function is looping properly
+    // console.log('new frame is running!')
 }
 
 update();
