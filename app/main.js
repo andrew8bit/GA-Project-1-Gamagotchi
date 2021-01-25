@@ -62,9 +62,26 @@ const clear = () => {
 
     drawPlayer();
 
-    requestAnimationFrame(update);
+    // requestAnimationFrame(update);
     // testing to see if our update function is looping properly
     // console.log('new frame is running!')
 // }
 
-update();
+// update();
+
+// we are now making our object move, using event listeners. 
+
+// we use the event, because we want to target the key the user inputs
+const keyUp = (e) => {
+    // testing to see if we get an input in our console.
+    console.log(e.key);
+}
+
+const keyDown = (e) => {
+    // testing to see if we get an input in our console.
+    console.log(e.key)
+}
+
+
+document.addEventListener('keydown', keyDown)
+document.addEventListener('keyup', keyUp)
