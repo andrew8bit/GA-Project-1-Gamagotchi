@@ -24,9 +24,10 @@ ctx.closePath();
 const player = {
     // width, height, and position of player;
     w:100,
-    h:200,
-    x: 300,
-    y: 300,
+    h:100,
+    // this makes our image center as we take both sides of width and height into account. 
+    x: 350,
+    y: 350,
     // we set relative position to 0 for now, as controller input will change these values
     dx: 0,
     dy: 0
