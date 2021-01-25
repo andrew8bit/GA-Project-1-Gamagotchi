@@ -109,7 +109,7 @@ const keyDown = (e) => {
     console.log(e.key)
     // console.log is reading our arrow key presses as 'ArrowRight,left,etc.'
     if (e.key === 'ArrowRight' || e.key === 'd') {
-        // we're gonna run these functions, that we haven't defined yet. We will define these later up top.
+        // we're gonna run these functions, that we haven't defined yet. We will define these later up top before we use them.
         moveRight();
     } else if (e.key === 'ArrowLeft' || e.key === 'a') {
         moveLeft();
@@ -121,6 +121,15 @@ const keyDown = (e) => {
 const keyUp = (e) => {
     // testing to see if we get an input in our console.
     console.log(e.key);
+    // since we made our dx and dy the moving factors of our player, we know how to stop it by making it 0. or i hope. 
+    if (
+        e.key === 'ArrowRight' || e.key === 'd' || 
+        e.key === 'ArrowLeft' || e.key === 'a' || 
+        e.key === 'ArrowUp' || e.key === 'w' 
+    ) {
+        player.dx = 0;
+        player.dy = 0;
+    }
 }
 
 
