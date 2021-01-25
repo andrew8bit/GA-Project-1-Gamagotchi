@@ -36,7 +36,9 @@ const player = {
     y: 350,
     // we set relative position to 0 for now, as controller input will change these values
     dx: 0,
-    dy: 0
+    dy: 0,
+    // added a speed value so we can update our position in our controller section.
+    speed: 3
     
 }
 
@@ -60,7 +62,14 @@ const clear = () => {
     clearRect(0,0, gameScreen.width, gameScreen.height)
 }
 
-//const update = () => {
+// we're going to add this newPos function in our update function to show our changed position when we update the screen. 
+const newPos = () => {
+    player.x += player.dx;
+    player.y += player.dy;
+}
+
+
+const update = () => {
     clear(); 
     // our screen was getting deleted previously so now we will add our screen update onto our update function. 
     // created screenDraw function in our draw section. 
@@ -68,20 +77,46 @@ const clear = () => {
 
     drawPlayer();
 
-    // requestAnimationFrame(update);
-    // testing to see if our update function is looping properly
-    // console.log('new frame is running!')
-// }
+    newPos();
 
-// update();
+    requestAnimationFrame(update);
+    // testing to see if our update function is looping properly
+    console.log('new frame is running!')
+}
+
+update();
 
 /******************** CONTROLLER  ***************************/
 // we are now making our object move, using event listeners. 
+// we need create a new position for our player by changing our dx and dy, which we previously set to 0. Our dy will not change unless we use the jump function.
+
+// the way canvas position is formatted, to the right and down, our value goes up, the left and up, our values go down. 
+const moveRight = () => {
+    player.dx += player.speed
+}
+
+const moveLeft = () => {
+    player.dx -= player.speed
+}
+
+// const jump = () => {
+
+// }
 
 // we use the event, because we want to target the key the user input
 const keyDown = (e) => {
     // testing to see if we get an input in our console.
     console.log(e.key)
+    // console.log is reading our arrow key presses as 'ArrowRight,left,etc.'
+    if (e.key === 'ArrowRight' || e.key === 'd') {
+        // we're gonna run these functions, that we haven't defined yet. We will define these later up top.
+        moveRight();
+    } else if (e.key === 'ArrowLeft' || e.key === 'a') {
+        moveLeft();
+    } 
+    //     else if (e.key === 'ArrowUp' || e.key === 'w') {
+    //     jump()
+    // }
 }
 const keyUp = (e) => {
     // testing to see if we get an input in our console.
@@ -89,5 +124,5 @@ const keyUp = (e) => {
 }
 
 
-document.addEventListener('keydown', keyDown)
+document.addEventListener('keydown', keyDown) 
 document.addEventListener('keyup', keyUp)
