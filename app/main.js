@@ -54,12 +54,12 @@ const drawPlayer = () => {
 const detectWalls = () => {
     // Because of our canvas, we know the left side is at x 0 and the right side will be gameScreen.width. 
     // LEFT WALL 
-    if (player.x < 0) {
-        player.x = 0;
+    if (player.x < 0 - player.w / 2) {
+        player.x = 0 - player.w / 2
     } // RIGHT WALL 
     // This right wall isn't working, because we have to account for the player width.
-    else if (player.x + player.w > gameScreen.width) {
-        player.x = gameScreen.width - player.w
+    else if (player.x > gameScreen.width - (player.w / 2)) {
+        player.x = gameScreen.width - (player.w / 2)
     }
 }
 
