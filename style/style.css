@@ -1,3 +1,8 @@
 body {
-    background-color: black;
+    text-align: center;
+    background-color: #dfe0df;
+}
+
+span {
+    padding:2em;
 }
