@@ -41,6 +41,7 @@ const player = {
     speed: 20,
     // added this jumping boolean so we can force it to only jump once. 
     jumping:'false',
+    gravity: 1
     
 }
 
@@ -65,6 +66,12 @@ const detectWalls = () => {
     }
 }
 
+// We are going to detect the floors because character keeps falling when adding gravity 
+const detectFloor = () => {
+    if (player.y > gameScreen.height - 50) {
+        player.y = gameScreen.height - 150
+    }
+}
 
 
 
@@ -89,6 +96,7 @@ const newPos = () => {
     player.y += player.dy;
     
     detectWalls();
+    detectFloor();
 }
 
 
@@ -101,6 +109,7 @@ const update = () => {
     drawPlayer();
 
     newPos();
+    player.dy += player.gravity
 
     requestAnimationFrame(update);
     // testing to see if our update function is looping properly
@@ -115,11 +124,11 @@ update();
 
 // the way canvas position is formatted, to the right and down, our value goes up, the left and up, our values go down. 
 const moveRight = () => {
-    player.dx += player.speed
+    player.dx += player.speed * 0.9
 }
 
 const moveLeft = () => {
-    player.dx -= player.speed
+    player.dx -= player.speed * 0.9
 }
 
 const jump = () => {
@@ -140,6 +149,7 @@ const keyDown = (e) => {
     } else if (e.key === 'ArrowUp' && player.jumping === 'false' || e.key === 'w' && player.jumping === 'false') {
         // we want this function to run on the key press and the state of the player is not currently jumping, to avoid jumping in the air. 
         jump();
+        
     }
 }
 const keyUp = (e) => {
