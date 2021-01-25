@@ -7,6 +7,9 @@ const ctx = gameScreen.getContext('2d');
 
 const playerImage = document.querySelector("#gatchiPlayer")
 
+/************************* DEFINED OUR DRAW FUNCTIONS  **********************/
+
+// creating our game screen
 // rect (x , y, width, height)
 const screenDraw = () => { 
     ctx.beginPath();
@@ -45,6 +48,8 @@ const drawPlayer = () => {
 
 }
 
+/****************** UPDATING OUR SCREEN ********************/
+
 // these functions updates the screen without our character. This important to look at since it deals with timing in our game,
 // we want out gamescreen to update constantly. 
 
@@ -58,6 +63,7 @@ const clear = () => {
 //const update = () => {
     clear(); 
     // our screen was getting deleted previously so now we will add our screen update onto our update function. 
+    // created screenDraw function in our draw section. 
     screenDraw();
 
     drawPlayer();
@@ -69,17 +75,17 @@ const clear = () => {
 
 // update();
 
+/******************** CONTROLLER  ***************************/
 // we are now making our object move, using event listeners. 
 
-// we use the event, because we want to target the key the user inputs
-const keyUp = (e) => {
-    // testing to see if we get an input in our console.
-    console.log(e.key);
-}
-
+// we use the event, because we want to target the key the user input
 const keyDown = (e) => {
     // testing to see if we get an input in our console.
     console.log(e.key)
+}
+const keyUp = (e) => {
+    // testing to see if we get an input in our console.
+    console.log(e.key);
 }
 
 
