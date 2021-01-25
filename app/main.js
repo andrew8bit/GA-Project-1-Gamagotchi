@@ -8,17 +8,19 @@ const ctx = gameScreen.getContext('2d');
 const playerImage = document.querySelector("#gatchiPlayer")
 
 // rect (x , y, width, height)
-ctx.beginPath();
-ctx.rect(0,0,gameScreen.width, gameScreen.height);
-ctx.fillStyle = "#bbf1fa"
-ctx.fill();
-ctx.closePath();
+const screenDraw = () => { 
+    ctx.beginPath();
+    ctx.rect(0,0,gameScreen.width, gameScreen.height);
+    ctx.fillStyle = "#bbf1fa"
+    ctx.fill();
+    ctx.closePath();
 
-ctx.beginPath();
-ctx.rect(0,450,gameScreen.width, 50);
-ctx.fillStyle = "#393e46"
-ctx.fill();
-ctx.closePath();
+    ctx.beginPath();
+    ctx.rect(0,450,gameScreen.width, 50);
+    ctx.fillStyle = "#393e46"
+    ctx.fill();
+    ctx.closePath();
+}
 
 // create gatchi player
 
@@ -53,14 +55,16 @@ const clear = () => {
     clearRect(0,0, gameScreen.width, gameScreen.height)
 }
 
-const update = () => {
-    clear();  
+//const update = () => {
+    clear(); 
+    // our screen was getting deleted previously so now we will add our screen update onto our update function. 
+    screenDraw();
 
     drawPlayer();
 
     requestAnimationFrame(update);
     // testing to see if our update function is looping properly
     // console.log('new frame is running!')
-}
+// }
 
 update();
