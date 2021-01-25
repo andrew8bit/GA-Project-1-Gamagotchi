@@ -6,3 +6,8 @@ body {
 span {
     padding:2em;
 }
+
+#gatchiPlayer {
+    /* this will remove our character from the side, since we want him to display visibily in our game screen. */
+    display:none;
+}
