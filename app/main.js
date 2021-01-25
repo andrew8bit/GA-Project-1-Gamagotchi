@@ -49,6 +49,25 @@ const drawPlayer = () => {
     ctx.drawImage(playerImage, player.x, player.y, player.w, player.h);
 
 }
+/****************** OBJECT COLLISION DETECTION *************/
+// We are going to work on detecting the walls and running this function later by running if statements.
+const detectWalls = () => {
+    // Because of our canvas, we know the left side is at x 0 and the right side will be gameScreen.width. 
+    // LEFT WALL 
+    if (player.x < 0) {
+        player.x = 0;
+    } // RIGHT WALL 
+    // This right wall isn't working, because we have to account for the player width.
+    else if (player.x + player.w > gameScreen.width) {
+        player.x = gameScreen.width - player.w
+    }
+}
+
+
+
+
+
+
 
 /****************** UPDATING OUR SCREEN ********************/
 
@@ -66,6 +85,8 @@ const clear = () => {
 const newPos = () => {
     player.x += player.dx;
     player.y += player.dy;
+    
+    detectWalls();
 }
 
 
