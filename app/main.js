@@ -30,7 +30,8 @@ const spriteAnimationSet =
 [2800,2800,2900,3000,3100,3200,3300,3400,3500] // jumpRevFacing 
 ]
 
-let currentSpriteFrame = 0  
+let currentSpriteFrame = 0
+let setIndex = 0  
 // create gatchi player
 const player = {
     // width, height, and position of player;
@@ -86,7 +87,7 @@ const drawPlayer = () => {
     // we will change our drawPlayer function to take in 9 parameters eventually to animate sprites
     // (image, sourceX, sourceY, sourceWidth, sourceHeight, player x, player y, player w and player h)
 
-    ctx.drawImage(images.player, currentSpriteFrame, 0, 100, 100, player.x, player.y , player.w, player.h)
+    ctx.drawImage(images.player, spriteAnimationSet[currentSpriteFrame][setIndex], 0, 100, 100, player.x, player.y , player.w, player.h)
 
 }
 
@@ -177,22 +178,22 @@ update();
 // the way canvas position is formatted, to the right and down, our value goes up, the left and up, our values go down. 
 const moveRight = () => {
     player.dx += player.speed * 0.9
-    // spriteIndex = spriteAnimationSet[2][0]
-    // for (let i = 0; i < spriteAnimationSet[2].length; i++) {
-    //     spriteIndex = spriteAnimationSet[2][i]
-    //     if (spriteIndex = spriteAnimationSet[2][5]) 
-    //     spriteIndex = spriteAnimationSet[2][0]
-    // }
+    currentSpriteFrame = 2
+    spriteIndex = 0
+
+    for (let i = 0; i < spriteAnimationSet[2].length; i++) {
+        spriteIndex = spriteAnimationSet[2][i]
+    }
 }
 
 const moveLeft = () => {
     player.dx -= player.speed * 0.9
-    // spriteIndex = spriteAnimationSet[3][0]
-    // for (let i = 0; i < spriteAnimationSet[3].length; i++) {
-    //     spriteIndex = spriteAnimationSet[3][i] 
-    //     console.log(spriteIndex)
+    currentSpriteFrame = 3
+    spriteIndex = 0
+    for (let i = 0; i < spriteAnimationSet[3].length; i++) {
+        spriteIndex = spriteAnimationSet[3][i] 
     }
-// }
+}
 
 const jump = () => {
     player.dy -= player.speed 
@@ -207,8 +208,11 @@ const keyDown = (e) => {
     if (e.key === 'ArrowRight' || e.key === 'd') {
         // we're gonna run these functions, that we haven't defined yet. We will define these later up top before we use them.
         moveRight();
+    
+
     } else if (e.key === 'ArrowLeft' || e.key === 'a') {
         moveLeft();
+
 
     } else if (e.key === 'ArrowUp' && player.jumping === 'false' || e.key === 'w' && player.jumping === 'false') {
         // we want this function to run on the key press and the state of the player is not currently jumping, to avoid jumping in the air. 
@@ -227,9 +231,7 @@ const keyUp = (e) => {
         e.key === 'ArrowUp' || e.key === 'w' 
     ) {
         player.dx = 0;
-        player.dy = 0;
-        
-        
+        player.dy = 0; 
     }
 }
 
