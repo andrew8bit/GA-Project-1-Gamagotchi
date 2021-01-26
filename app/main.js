@@ -6,12 +6,13 @@ gameScreen.height = 500;
 const ctx = gameScreen.getContext('2d');
 
 /****************** SPRITE ANIMATIONS  ******************************/
-const playerImage = document.querySelector("#gatchiPlayer")
+// const playerImage = document.querySelector("#gatchiPlayer")
 // this is where we declare all of our sprites
 // we moved all our sprites into one long spritesheet. 
 // srctotalX = 3604
 // srctotaly = 100
 // totalsprites = 36
+// width of each sprite is roughly 100
 // essentially we are creating indexes from the sprites
 // index 0 - 3 = idleForwardFacing
 // index 4-7 = idleRevFacing
@@ -20,30 +21,32 @@ const playerImage = document.querySelector("#gatchiPlayer")
 // index 20 - 27 jumpForwardFacing
 // index 28 - 35 jumpRevFacing 
 
-const playerImages = {}
-playerImages.player = new Image();
-playerImages.player.src = 'images/PM-idle.png'
-const playerIdle = document.querySelector("#gatchiIdle")
-const playerWalk = document.querySelector("#gatchiIdle")
-const playerRevWalk = document.querySelector("#gatchiIdle")
-
-
-const sheetWidth = 192;
-const sheetHeight = 32; 
-
-const sheetCols = 3;
-const sheetRows = 0;
-
-const spriteWidth = 192 / 4;
-
-let currentFrame = 0;
-
-const updateFrame = ()=> {
-    currentFrame = ++ currentFrame % sheetCols; // 1 % 3 = 1
-
-    srcX = currentFrame * spriteWidth;
-    srcY = 0;
+// create gatchi player
+const player = {
+    // width, height, and position of player;
+    w:100,
+    h:100,
+    // this makes our image center as we take both sides of width and height into account. 
+    x: 350,
+    y: 350,
+    // we set relative position to 0 for now, as controller input will change these values
+    dx: 0,
+    dy: 0,
+    // added a speed value so we can update our position in our controller section.
+    speed: 15,
+    // added this jumping boolean so we can force it to only jump once. 
+    jumping:'false',
+    gravity: 6
+    
 }
+
+// we are storing the images
+const images = {};
+images.player = new Image();
+images.player.src='/images/spritesheetp1.png';
+
+
+
 
 
 
@@ -66,39 +69,17 @@ const screenDraw = () => {
     ctx.closePath();
 }
 
-// create gatchi player
-
-const player = {
-    // width, height, and position of player;
-    w:100,
-    h:100,
-    // this makes our image center as we take both sides of width and height into account. 
-    x: 350,
-    y: 350,
-    // we set relative position to 0 for now, as controller input will change these values
-    dx: 0,
-    dy: 0,
-    // added a speed value so we can update our position in our controller section.
-    speed: 15,
-    // added this jumping boolean so we can force it to only jump once. 
-    jumping:'false',
-    gravity: 6
-    
-}
 
 // creating a function to draw our gatchi
-
+// we will change our drawPlayer function to take in 9 parameters eventually to animate sprites
+// (image, sourceX, sourceY, sourceWidth, sourceHeight, dx, dy, dWidth and dHeight)
+// we are getting the images from our sprite sheet, and drawing it to our canvas. 
 const drawPlayer = () => {
     // ctx drawImage method takes in source, and x and y of where we want, width and height, which we already defined.
-    ctx.drawImage(playerImage, player.x, player.y, player.w, player.h);
+    // ctx.drawImage(playerImage, player.x, player.y, player.w, player.h);
+    ctx.drawImage(images.player, 0,0, 100, 100, ((gameScreen.width / 2)-50), ((gameScreen.height /2) + 100), 100, 100)
 
 }
-
-
-
-
-
-
 
 
 /****************** OBJECT COLLISION DETECTION *************/
