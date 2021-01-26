@@ -94,44 +94,43 @@ const drawPlayer = () => {
     ctx.drawImage(images.player, spriteAnimationSet[currentSpriteFrame][setIndex], 0, 100, 100, player.x, player.y , player.w, player.h)
 
 }
-
 const enemy = {
     x : Math.random()*1000,
     y : -100,
     w : 25,
     h : 25,
-    color : 'red',
-    gravity : 10
+    color : '#FF0000',
+    gravity : Math.random()*5
 }
 const exp = {
     x : Math.random()*1000,
     y : -100,
     w : 25,
     h : 25,
-    color : 'yellow',
-    gravity : 10
+    color : '#FFF000',
+    gravity : Math.random()*5
 }
 const health = {
     x : Math.random()*1000,
     y : -100,
     w : 25,
     h : 25,
-    color : 'green',
-    gravity : Math.random()*10
+    color : '#00FF00',
+    gravity : Math.random()*5
 }
 const food = {
     x : Math.random()*1000,
     y : -100,
     w : 25,
     h : 25,
-    color : 'blue',
-    gravity : 10
+    color : '#FFA500',
+    gravity : Math.random()*5
 }
 const drawRect = (x,y,w,h,color) => {
     ctx.beginPath();
     ctx.fillStyle = color;
     ctx.fillRect(x,y,w,h)
-    console.log('something appeared!')
+    // console.log('something appeared!')
 }
 
 
@@ -167,17 +166,26 @@ const jumpCeiling = () => {
     }
 }
 
+
 const enemyHitDetect = () => {
-    if (player.y === enemy.y && player.x === enemy.x) {
+    if (
+        enemy.y  > player.y - 50  && enemy.y < player.y + 50 &&
+        enemy.x  < player.x + 50 && enemy.x > player.x - 50
+        ) {
+
         enemy.y = -10
         enemy.x = Math.random()*100
         player.health -= 20
         console.log(player.health)
+
     }
 }
 
 const expHitDetect = () => {
-    if (player.y === exp.y && player.x === exp.x) {
+    if (
+        exp.y  > player.y - 50  && exp.y < player.y + 50 &&
+        exp.x  < player.x + 50 && exp.x > player.x - 50
+        ) {
         exp.y = -10
         exp.x = Math.random()*100
         player.exp += 50
@@ -186,7 +194,10 @@ const expHitDetect = () => {
 }
 
 const healthHitDetect = () => {
-    if (player.y === enemy.y && player.x === enemy.x) {
+    if (
+        health.y  > player.y - 50  && health.y < player.y + 50 &&
+        health.x  < player.x + 50 && health.x > player.x - 50
+        ) {
         health.y = -10
         health.x = Math.random()*100
         player.health += 10
@@ -195,7 +206,10 @@ const healthHitDetect = () => {
 }
 
 const foodHitDetect = () => {
-    if (player.y === food.y && player.x === food.x) {
+    if (
+        food.y  > player.y - 50  && food.y < player.y + 50 &&
+        food.x  < player.x + 50 && food.x > player.x - 50
+        ) {
         food.y = -10
         food.x = Math.random()*100
         player.hunger += 10
@@ -225,19 +239,23 @@ const newPos = () => {
     enemy.y += enemy.gravity
     exp.y += exp.gravity
     health.y += health.gravity
+    food.y += food.gravity
 
-    if (enemy.y > gameScreen.height) {
+    if (enemy.y > gameScreen.height-75) {
         enemy.y = -10
         enemy.x = Math.random() * 1000
     }
-    else if (exp.y > gameScreen.height) {
+    else if (exp.y > gameScreen.height-75) {
         exp.y = -10
         exp.x = Math.random() * 1000
     }
-    else if (health.y > gameScreen.height) {
+    else if (health.y > gameScreen.height-75) {
         health.y = -10
         health.x = Math.random() * 1000
-        
+    }
+    else if (food.y > gameScreen.height-75) {
+        food.y = -10
+        food.x = Math.random() * 1000
     }
     
     detectWalls();
@@ -247,7 +265,7 @@ const newPos = () => {
     expHitDetect();
     healthHitDetect();
     foodHitDetect();
-    
+
 }
 
 
@@ -256,22 +274,23 @@ const update = () => {
     // our screen was getting deleted previously so now we will add our screen update onto our update function. 
     // created screenDraw function in our draw section. 
     screenDraw();
-
+    
+    newPos();
     drawRect(enemy.x, enemy.y, enemy.w, enemy.h, enemy.color);
     drawRect(exp.x, exp.y, exp.w, exp.h, exp.color);
     drawRect(health.x, health.y, health.w, health.h, health.color);
     drawRect(food.x, food.y, food.w, food.h, food.color);
-
-
+    
     drawPlayer();
-
-    newPos();
+    
+    console.log(player.x + 50, player.x-50)
+    // console.log(enemy.x)
     
 
 
     requestAnimationFrame(update);
     // testing to see if our update function is looping properly
-    console.log('new frame is running!')
+    // console.log('new frame is running!')
 }
 
 update();
@@ -308,7 +327,7 @@ const jump = () => {
 // we use the event, because we want to target the key the user input
 const keyDown = (e) => {
     // testing to see if we get an input in our console.
-    console.log(e.key)
+    // console.log(e.key)
     // console.log is reading our arrow key presses as 'ArrowRight,left,etc.'
     if (e.key === 'ArrowRight' || e.key === 'd') {
         // we're gonna run these functions, that we haven't defined yet. We will define these later up top before we use them.
@@ -328,7 +347,7 @@ const keyDown = (e) => {
 }
 const keyUp = (e) => {
     // testing to see if we get an input in our console.
-    console.log(e.key);
+    // console.log(e.key);
     // since we made our dx and dy the moving factors of our player, we know how to stop it by making it 0. or i hope. 
     if (
         e.key === 'ArrowRight' || e.key === 'd' || 
