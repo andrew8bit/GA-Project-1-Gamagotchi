@@ -13,13 +13,21 @@ const ctx = gameScreen.getContext('2d');
 // srctotaly = 100
 // totalsprites = 36
 // width of each sprite is roughly 100
-// essentially we are creating indexes from the sprites
+// essentially we are creating indexes from the sprite sheet. 
 // index 0 - 3 = idleForwardFacing
 // index 4-7 = idleRevFacing
 // index 8 - 13 walkForwardFacing
 // index 14 - 19 walkRevFacing
 // index 20 - 27 jumpForwardFacing
 // index 28 - 35 jumpRevFacing 
+const spriteAnimationSet = 
+[[0, 100, 200, 300], // idleForwardFacing
+[400,500,600, 700], // idleRevFacing
+[800,900,1000,1100,1200,1300], // walkForwardFacing
+[1400,1500,1600,1700,1800,1900], // walkRevFacing
+[2000,2100,2200,2300,2400,2500,2600,2700], // jumpForwardFacing
+[2800,2800,2900,3000,3100,3200,3300,3400,3500] // jumpRevFacing 
+]
 
 // create gatchi player
 const player = {
@@ -42,15 +50,11 @@ const player = {
     // images: {} - we don't need thisn anymore because we put the player x and y into the draw function instead 
     
 }
+
 const images = {}
 // creates a new image 
 images.player = new Image();
 images.player.src='/images/spritesheetp1.png';
-
-
-
-
-
 
 
 /************************* DEFINED OUR DRAW FUNCTIONS  **********************/
@@ -79,8 +83,8 @@ const drawPlayer = () => {
     // ctx.drawImage(playerImage, player.x, player.y, player.w, player.h);
     // we will change our drawPlayer function to take in 9 parameters eventually to animate sprites
     // (image, sourceX, sourceY, sourceWidth, sourceHeight, player x, player y, player w and player h)
-    
-    ctx.drawImage(images.player, 0,0, 100, 100, player.x, player.y , player.w, player.h)
+
+    ctx.drawImage(images.player, 700, 0, 100, 100, player.x, player.y , player.w, player.h)
 
 }
 
