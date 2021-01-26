@@ -169,8 +169,8 @@ const jumpCeiling = () => {
 
 const enemyHitDetect = () => {
     if (
-        enemy.y  > player.y - 50  && enemy.y < player.y + 50 &&
-        enemy.x  < player.x + 50 && enemy.x > player.x - 50
+        enemy.x  > player.x  && enemy.x < player.x + 100 &&
+        enemy.y  > player.y  && enemy.y < player.y + 100
         ) {
 
         enemy.y = -10
@@ -183,8 +183,8 @@ const enemyHitDetect = () => {
 
 const expHitDetect = () => {
     if (
-        exp.y  > player.y - 50  && exp.y < player.y + 50 &&
-        exp.x  < player.x + 50 && exp.x > player.x - 50
+        exp.x  > player.x  && exp.x < player.x + 100 &&
+        exp.y  > player.y  && exp.y < player.y + 100
         ) {
         exp.y = -10
         exp.x = Math.random()*100
@@ -195,8 +195,8 @@ const expHitDetect = () => {
 
 const healthHitDetect = () => {
     if (
-        health.y  > player.y - 50  && health.y < player.y + 50 &&
-        health.x  < player.x + 50 && health.x > player.x - 50
+        health.x  > player.x  && health.x < player.x + 100 &&
+        health.y  > player.y  && health.y < player.y + 100
         ) {
         health.y = -10
         health.x = Math.random()*100
@@ -207,8 +207,8 @@ const healthHitDetect = () => {
 
 const foodHitDetect = () => {
     if (
-        food.y  > player.y - 50  && food.y < player.y + 50 &&
-        food.x  < player.x + 50 && food.x > player.x - 50
+        food.x  > player.x  && food.x < player.x + 100 &&
+        food.y  > player.y  && food.y < player.y + 100
         ) {
         food.y = -10
         food.x = Math.random()*100
