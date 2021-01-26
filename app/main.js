@@ -34,6 +34,10 @@ let currentSpriteFrame = 0
 let setIndex = 0  
 // create gatchi player
 const player = {
+    // we are going to define game elements
+    health:100,
+    exp:0,
+    hunger:100,
     // width, height, and position of player;
     w:100,
     h:100,
@@ -91,6 +95,45 @@ const drawPlayer = () => {
 
 }
 
+const enemy = {
+    x : Math.random()*1000,
+    y : -100,
+    w : 25,
+    h : 25,
+    color : 'red',
+    gravity : 10
+}
+const exp = {
+    x : Math.random()*1000,
+    y : -100,
+    w : 25,
+    h : 25,
+    color : 'yellow',
+    gravity : 10
+}
+const health = {
+    x : Math.random()*1000,
+    y : -100,
+    w : 25,
+    h : 25,
+    color : 'green',
+    gravity : Math.random()*10
+}
+const food = {
+    x : Math.random()*1000,
+    y : -100,
+    w : 25,
+    h : 25,
+    color : 'blue',
+    gravity : 10
+}
+const drawRect = (x,y,w,h,color) => {
+    ctx.beginPath();
+    ctx.fillStyle = color;
+    ctx.fillRect(x,y,w,h)
+    console.log('something appeared!')
+}
+
 
 /****************** OBJECT COLLISION DETECTION *************/
 // We are going to work on detecting the walls and running this function later by running if statements.
@@ -124,8 +167,41 @@ const jumpCeiling = () => {
     }
 }
 
+const enemyHitDetect = () => {
+    if (player.y === enemy.y && player.x === enemy.x) {
+        enemy.y = -10
+        enemy.x = Math.random()*100
+        player.health -= 20
+        console.log(player.health)
+    }
+}
 
+const expHitDetect = () => {
+    if (player.y === exp.y && player.x === exp.x) {
+        exp.y = -10
+        exp.x = Math.random()*100
+        player.exp += 50
+        console.log(player.exp)
+    }
+}
 
+const healthHitDetect = () => {
+    if (player.y === enemy.y && player.x === enemy.x) {
+        health.y = -10
+        health.x = Math.random()*100
+        player.health += 10
+        console.log(player.health)
+    }
+}
+
+const foodHitDetect = () => {
+    if (player.y === food.y && player.x === food.x) {
+        food.y = -10
+        food.x = Math.random()*100
+        player.hunger += 10
+        console.log(player.hunger)
+    }
+}
 
 
 
@@ -146,10 +222,32 @@ const newPos = () => {
     player.x += player.dx;
     player.y += player.dy;
     player.y += player.gravity
+    enemy.y += enemy.gravity
+    exp.y += exp.gravity
+    health.y += health.gravity
+
+    if (enemy.y > gameScreen.height) {
+        enemy.y = -10
+        enemy.x = Math.random() * 1000
+    }
+    else if (exp.y > gameScreen.height) {
+        exp.y = -10
+        exp.x = Math.random() * 1000
+    }
+    else if (health.y > gameScreen.height) {
+        health.y = -10
+        health.x = Math.random() * 1000
+        
+    }
     
     detectWalls();
     detectFloor();
     jumpCeiling();
+    enemyHitDetect();
+    expHitDetect();
+    healthHitDetect();
+    foodHitDetect();
+    
 }
 
 
@@ -159,9 +257,16 @@ const update = () => {
     // created screenDraw function in our draw section. 
     screenDraw();
 
+    drawRect(enemy.x, enemy.y, enemy.w, enemy.h, enemy.color);
+    drawRect(exp.x, exp.y, exp.w, exp.h, exp.color);
+    drawRect(health.x, health.y, health.w, health.h, health.color);
+    drawRect(food.x, food.y, food.w, food.h, food.color);
+
+
     drawPlayer();
 
     newPos();
+    
 
 
     requestAnimationFrame(update);
