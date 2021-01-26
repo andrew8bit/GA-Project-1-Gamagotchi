@@ -102,6 +102,9 @@ const enemy = {
     color : '#FF0000',
     gravity : Math.random()*5
 }
+
+let enemy1 = new enemy
+
 const exp = {
     x : Math.random()*1000,
     y : -100,
@@ -174,7 +177,7 @@ const enemyHitDetect = () => {
         ) {
 
         enemy.y = -10
-        enemy.x = Math.random()*100
+        enemy.x = Math.random()*1000
         player.health -= 20
         console.log(player.health)
 
@@ -187,7 +190,7 @@ const expHitDetect = () => {
         exp.y  > player.y  && exp.y < player.y + 100
         ) {
         exp.y = -10
-        exp.x = Math.random()*100
+        exp.x = Math.random()*1000
         player.exp += 50
         console.log(player.exp)
     }
@@ -199,9 +202,10 @@ const healthHitDetect = () => {
         health.y  > player.y  && health.y < player.y + 100
         ) {
         health.y = -10
-        health.x = Math.random()*100
+        health.x = Math.random()*1000
+        if (player.health < 100 && player.health >0 ) {
         player.health += 10
-        console.log(player.health)
+        }
     }
 }
 
@@ -211,15 +215,26 @@ const foodHitDetect = () => {
         food.y  > player.y  && food.y < player.y + 100
         ) {
         food.y = -10
-        food.x = Math.random()*100
-        player.hunger += 10
-        console.log(player.hunger)
+        food.x = Math.random()*1000
+        if (player.hunger < 80 && player.hunger > 0) {
+            player.hunger += 20
+        }
     }
 }
 
 
-
 /****************** UPDATING OUR SCREEN ********************/
+// we are going to update the display located in our HTML. 
+const hpDisplay = document.querySelector('#lifePoints');
+const hngrDisplay = document.querySelector('#hungerPoints');
+const expDisplay = document.querySelector('#expPoints');
+
+const gameEssentials = ()=> {
+    hpDisplay.textContent = player.health
+    hngrDisplay.textContent = Math.floor(player.hunger)
+    expDisplay.textContent = player.exp
+}
+
 
 // these functions updates the screen without our character. This important to look at since it deals with timing in our game,
 // we want out gamescreen to update constantly. 
@@ -268,6 +283,7 @@ const newPos = () => {
 
 }
 
+/************************ GAME LOOP *************************/
 
 const update = () => {
     clear(); 
@@ -283,7 +299,12 @@ const update = () => {
     
     drawPlayer();
     
-    console.log(player.x + 50, player.x-50)
+    gameEssentials();
+
+    if (player.hunger > 0) {
+    player.hunger -= .1
+    }
+    console.log(player.health)
     // console.log(enemy.x)
     
 
