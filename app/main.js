@@ -1,11 +1,52 @@
 // things to check in game development are timing, physics, logic. 
 const gameScreen = document.querySelector("#gameScreen");
-gameScreen.width = 800;
+gameScreen.width = 1000;
 gameScreen.height = 500;
 // ctx is short for context - standard practice. 
 const ctx = gameScreen.getContext('2d');
 
+/****************** SPRITE ANIMATIONS  ******************************/
 const playerImage = document.querySelector("#gatchiPlayer")
+// this is where we declare all of our sprites
+// we moved all our sprites into one long spritesheet. 
+// srctotalX = 3604
+// srctotaly = 100
+// totalsprites = 36
+// essentially we are creating indexes from the sprites
+// index 0 - 3 = idleForwardFacing
+// index 4-7 = idleRevFacing
+// index 8 - 13 walkForwardFacing
+// index 14 - 19 walkRevFacing
+// index 20 - 27 jumpForwardFacing
+// index 28 - 35 jumpRevFacing 
+
+const playerImages = {}
+playerImages.player = new Image();
+playerImages.player.src = 'images/PM-idle.png'
+const playerIdle = document.querySelector("#gatchiIdle")
+const playerWalk = document.querySelector("#gatchiIdle")
+const playerRevWalk = document.querySelector("#gatchiIdle")
+
+
+const sheetWidth = 192;
+const sheetHeight = 32; 
+
+const sheetCols = 3;
+const sheetRows = 0;
+
+const spriteWidth = 192 / 4;
+
+let currentFrame = 0;
+
+const updateFrame = ()=> {
+    currentFrame = ++ currentFrame % sheetCols; // 1 % 3 = 1
+
+    srcX = currentFrame * spriteWidth;
+    srcY = 0;
+}
+
+
+
 
 /************************* DEFINED OUR DRAW FUNCTIONS  **********************/
 
@@ -52,6 +93,14 @@ const drawPlayer = () => {
     ctx.drawImage(playerImage, player.x, player.y, player.w, player.h);
 
 }
+
+
+
+
+
+
+
+
 /****************** OBJECT COLLISION DETECTION *************/
 // We are going to work on detecting the walls and running this function later by running if statements.
 const detectWalls = () => {
