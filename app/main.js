@@ -36,14 +36,17 @@ const player = {
     speed: 15,
     // added this jumping boolean so we can force it to only jump once. 
     jumping:'false',
-    gravity: 6
+    gravity: 6,
+    
+    // // we needed to store the images into this player object, our draw function has no relation to this player currently 
+    images: {}
     
 }
 
 // we are storing the images
-const images = {};
-images.player = new Image();
-images.player.src='/images/spritesheetp1.png';
+// const images = {};
+player.images.player = new Image();
+player.images.player.src='/images/spritesheetp1.png';
 
 
 
@@ -71,13 +74,13 @@ const screenDraw = () => {
 
 
 // creating a function to draw our gatchi
-// we will change our drawPlayer function to take in 9 parameters eventually to animate sprites
-// (image, sourceX, sourceY, sourceWidth, sourceHeight, dx, dy, dWidth and dHeight)
 // we are getting the images from our sprite sheet, and drawing it to our canvas. 
 const drawPlayer = () => {
     // ctx drawImage method takes in source, and x and y of where we want, width and height, which we already defined.
     // ctx.drawImage(playerImage, player.x, player.y, player.w, player.h);
-    ctx.drawImage(images.player, 0,0, 100, 100, ((gameScreen.width / 2)-50), ((gameScreen.height /2) + 100), 100, 100)
+    // we will change our drawPlayer function to take in 9 parameters eventually to animate sprites
+    // (image, sourceX, sourceY, sourceWidth, sourceHeight, dx, dy, dWidth and dHeight)
+    ctx.drawImage(player.images.player, 0,0, 100, 100, player.x, player.y , 100, 100)
 
 }
 
@@ -150,10 +153,10 @@ const update = () => {
     screenDraw();
 
     drawPlayer();
+    console.log(player.images.src)
 
     newPos();
 
- 
 
     requestAnimationFrame(update);
     // testing to see if our update function is looping properly
