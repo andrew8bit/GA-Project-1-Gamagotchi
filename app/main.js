@@ -39,14 +39,13 @@ const player = {
     gravity: 6,
     
     // // we needed to store the images into this player object, our draw function has no relation to this player currently 
-    images: {}
+    // images: {} - we don't need thisn anymore because we put the player x and y into the draw function instead 
     
 }
-
-// we are storing the images
-// const images = {};
-player.images.player = new Image();
-player.images.player.src='/images/spritesheetp1.png';
+const images = {}
+// creates a new image 
+images.player = new Image();
+images.player.src='/images/spritesheetp1.png';
 
 
 
@@ -79,8 +78,9 @@ const drawPlayer = () => {
     // ctx drawImage method takes in source, and x and y of where we want, width and height, which we already defined.
     // ctx.drawImage(playerImage, player.x, player.y, player.w, player.h);
     // we will change our drawPlayer function to take in 9 parameters eventually to animate sprites
-    // (image, sourceX, sourceY, sourceWidth, sourceHeight, dx, dy, dWidth and dHeight)
-    ctx.drawImage(player.images.player, 0,0, 100, 100, player.x, player.y , 100, 100)
+    // (image, sourceX, sourceY, sourceWidth, sourceHeight, player x, player y, player w and player h)
+    
+    ctx.drawImage(images.player, 0,0, 100, 100, player.x, player.y , player.w, player.h)
 
 }
 
@@ -153,7 +153,6 @@ const update = () => {
     screenDraw();
 
     drawPlayer();
-    console.log(player.images.src)
 
     newPos();
 
