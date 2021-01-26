@@ -20,6 +20,7 @@ const ctx = gameScreen.getContext('2d');
 // index 14 - 19 walkRevFacing
 // index 20 - 27 jumpForwardFacing
 // index 28 - 35 jumpRevFacing 
+
 const spriteAnimationSet = 
 [[0, 100, 200, 300], // idleForwardFacing
 [400,500,600, 700], // idleRevFacing
@@ -29,6 +30,7 @@ const spriteAnimationSet =
 [2800,2800,2900,3000,3100,3200,3300,3400,3500] // jumpRevFacing 
 ]
 
+let spriteIndex = 0  
 // create gatchi player
 const player = {
     // width, height, and position of player;
@@ -84,7 +86,7 @@ const drawPlayer = () => {
     // we will change our drawPlayer function to take in 9 parameters eventually to animate sprites
     // (image, sourceX, sourceY, sourceWidth, sourceHeight, player x, player y, player w and player h)
 
-    ctx.drawImage(images.player, 700, 0, 100, 100, player.x, player.y , player.w, player.h)
+    ctx.drawImage(images.player, spriteIndex, 0, 100, 100, player.x, player.y , player.w, player.h)
 
 }
 
@@ -175,10 +177,21 @@ update();
 // the way canvas position is formatted, to the right and down, our value goes up, the left and up, our values go down. 
 const moveRight = () => {
     player.dx += player.speed * 0.9
+    spriteIndex = spriteAnimationSet[2][0]
+    for (let i = 0; i < spriteAnimationSet[2].length; i++) {
+        spriteIndex = spriteAnimationSet[2][i]
+        if (spriteIndex = spriteAnimationSet[2][5]) 
+        spriteIndex = spriteAnimationSet[2][0]
+    }
 }
 
 const moveLeft = () => {
     player.dx -= player.speed * 0.9
+    spriteIndex = spriteAnimationSet[3][0]
+    for (let i = 0; i < spriteAnimationSet[3].length; i++) {
+        spriteIndex = spriteAnimationSet[3][i] 
+        console.log(spriteIndex)
+    }
 }
 
 const jump = () => {
