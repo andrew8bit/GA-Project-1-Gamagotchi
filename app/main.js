@@ -63,6 +63,8 @@ const images = {}
 images.player = new Image();
 images.player.src='/images/spritesheetp1.png';
 
+/****************************** SOUND EFFECTS ************************************/
+
 
 /************************* DEFINED OUR DRAW FUNCTIONS  **********************/
 
@@ -94,16 +96,28 @@ const drawPlayer = () => {
     ctx.drawImage(images.player, spriteAnimationSet[currentSpriteFrame][setIndex], 0, 100, 100, player.x, player.y , player.w, player.h)
 
 }
-const enemy = {
-    x : Math.random()*1000,
-    y : -100,
-    w : 25,
-    h : 25,
-    color : '#FF0000',
-    gravity : Math.random()*5
+
+function Enemy() {  
+    this.x = Math.random()*1000;
+    this.y = -100;
+    this.w = 25;
+    this.h = 25;
+    this.color = '#FF0000';
+    this.gravity = Math.random()*5
 }
 
-let enemy1 = new enemy
+let enemy = new Enemy();
+let enemy1 = new Enemy();
+let enemy2 = new Enemy();
+
+// const enemy = {
+//     x : Math.random()*1000,
+//     y : -100,
+//     w : 25,
+//     h : 25,
+//     color : '#FF0000',
+//     gravity : Math.random()*5
+// }
 
 const exp = {
     x : Math.random()*1000,
@@ -251,6 +265,7 @@ const newPos = () => {
     player.x += player.dx;
     player.y += player.dy;
     player.y += player.gravity
+
     enemy.y += enemy.gravity
     exp.y += exp.gravity
     health.y += health.gravity
@@ -307,8 +322,6 @@ const update = () => {
     console.log(player.health)
     // console.log(enemy.x)
     
-
-
     requestAnimationFrame(update);
     // testing to see if our update function is looping properly
     // console.log('new frame is running!')
@@ -383,3 +396,5 @@ const keyUp = (e) => {
 
 document.addEventListener('keydown', keyDown) 
 document.addEventListener('keyup', keyUp)
+
+/***************** SOUND EFFECTS **********************/
