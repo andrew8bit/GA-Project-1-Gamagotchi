@@ -339,17 +339,17 @@ const newPos = () => {
 
 const winLossCheck = () => {
     if (player.exp >= 2000) {
-        cancelAnimationFrame();
+        cancelAnimationFrame(update);
         // toggle the win sceen
     }
     else if (player.health <= 0 || player.hunger <=0) {
         currentSpriteFrame = 7;
         setIndex = 0;
-        cancelAnimationFrame();
+        cancelAnimationFrame(update);
         // toggle the losing winnin screen
     }
     else if (player.hunger <= 0) {
-        cancelAnimationFrame();
+        cancelAnimationFrame(update);
         // toggle the losing screen hunger
     }
 }
@@ -357,6 +357,7 @@ const winLossCheck = () => {
 
 const update = () => {
     clear(); 
+
     // our screen was getting deleted previously so now we will add our screen update onto our update function. 
     // created screenDraw function in our draw section. 
     screenDraw();
@@ -384,7 +385,7 @@ const update = () => {
 
     requestAnimationFrame(update);
     // testing to see if our update function is looping properly
-    // console.log('new frame is running!')
+    console.log('new frame is running!')
 }
 
 update();
@@ -456,13 +457,28 @@ const keyUp = (e) => {
 }
 
 
+
 document.addEventListener('keydown', keyDown) 
 document.addEventListener('keyup', keyUp)
 
 /***************** DOM VARIABLES AND SCREENS *******************/
-
-const tutorialButton = body.document.querySelector('#tutorialButton')
-const tutorialArray = body.document.querySelectorAll(".tutorial")
-const tutorialDisplay = () => {
+// const gameStartButton = document.body.querySelector('#gatchiEgg');
+// const splashScreen = document.body.querySelector('#splashScreen');
+// const gameDisplay = document.body.querySelector('#game');
+// const gameStart = () => {
+//     splashScreen.style.display = 'none';
+//     // gameDisplay.style.display= "";
+//     // console.log(gameDisplay)
+//     update();
+// }
+// const tutorialButton = document.body.querySelector('#tutorialButton');
+// const tutorialArray = document.body.querySelectorAll(".tutorial");
+// const tutorialDisplay = () => {
+//     console.log('clickedTutorial!')
+//     console.log(tutorialArray[0])
+//     tutorialArray[1].style.display = 'block';
     
-}
+// }
+
+// tutorialButton.addEventListener('click', tutorialDisplay);
+// gameStartButton.addEventListener('click', gameStart);
