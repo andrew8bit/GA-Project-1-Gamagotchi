@@ -1,6 +1,7 @@
 body {
     text-align: center;
-    background-color: #dfe0df;
+    background-color: #393e46;
+    color: white;
     /* background-color: #bbf1fa; */
     margin:0;
     font-family: 'Roboto Mono', monospace;
@@ -27,7 +28,7 @@ body {
     text-align: center;
     font-size: 32px;
     margin:0;
-    display:none;
+    /* display:none; */
 }
 
 #gatchiEgg {
@@ -59,24 +60,24 @@ body {
 }
 
 .tutorial {
-    display:none;
+    /* display:none; */
 } 
 #controlsDesc {
-    display:none;
+    /* display:none; */
 }
 
 #damageDesc {
-    display:none;
+    /* display:none; */
 }
 
 #yellowDesc {
-    display:none;
+    /* display:none; */
 }
 
 #orangeDesc {
-    display:none;
+    /* display:none; */
 }
 
 #warningDesc {
-    display:none;
+    /* display:none; */
 }

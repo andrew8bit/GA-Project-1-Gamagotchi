@@ -339,17 +339,23 @@ const newPos = () => {
 
 const winLossCheck = () => {
     if (player.exp >= 2000) {
-        cancelAnimationFrame(update);
+        
+        cancelAnimationFrame(requestID);
+        console.log('Sanity Check')
         // toggle the win sceen
     }
     else if (player.health <= 0 || player.hunger <=0) {
         currentSpriteFrame = 7;
         setIndex = 0;
-        cancelAnimationFrame(update);
-        // toggle the losing winnin screen
+        cancelAnimationFrame(requestID);
+        console.log('Sanity Check')
+        
+        // toggle the losing hurt screen
     }
     else if (player.hunger <= 0) {
-        cancelAnimationFrame(update);
+
+        cancelAnimationFrame(requestID);
+        console.log('Sanity Check')
         // toggle the losing screen hunger
     }
 }
@@ -357,7 +363,8 @@ const winLossCheck = () => {
 
 const update = () => {
     clear(); 
-
+    
+    
     // our screen was getting deleted previously so now we will add our screen update onto our update function. 
     // created screenDraw function in our draw section. 
     screenDraw();
@@ -369,26 +376,26 @@ const update = () => {
     drawRect(bigBoss.x, bigBoss.y, bigBoss.w, bigBoss.h, bigBoss.color);
     
     newPos();
-
+    
     drawPlayer();
     
     gameEssentials();
-
+    
     if (player.hunger > 0) {
-    player.hunger -= .1
+        player.hunger -= .1
     } 
     
     winLossCheck();
     // console.log(enemy.x)
     
+    const requestID = requestAnimationFrame(update);
 
 
-    requestAnimationFrame(update);
     // testing to see if our update function is looping properly
     console.log('new frame is running!')
 }
 
-update();
+// update();
 
 /******************** CONTROLLER  ***************************/
 // we are now making our object move, using event listeners. 
@@ -462,15 +469,26 @@ document.addEventListener('keydown', keyDown)
 document.addEventListener('keyup', keyUp)
 
 /***************** DOM VARIABLES AND SCREENS *******************/
-// const gameStartButton = document.body.querySelector('#gatchiEgg');
-// const splashScreen = document.body.querySelector('#splashScreen');
-// const gameDisplay = document.body.querySelector('#game');
-// const gameStart = () => {
-//     splashScreen.style.display = 'none';
-//     // gameDisplay.style.display= "";
-//     // console.log(gameDisplay)
-//     update();
-// }
+const gameStartButton = document.body.querySelector('#gatchiEgg');
+const splashScreen = document.body.querySelector('#splashScreen');
+const gameDisplay = document.body.querySelector('#gameDiv');
+const gameStart = () => {
+    // splashScreen.style.display = 'none';
+    // gameDisplay.style.display= "";
+    // console.log(gameDisplay)
+
+    if (splashScreen.style.display === "none") {
+        splashScreen.style.display = "block"
+    } else {
+        splashScreen.style.display = "none"
+    }
+    if (gameDisplay.style.display === "block") {
+        gameDisplay.style.display = "none"
+    } else {
+        gameDisplay.style.display = "block"
+    }
+    update();
+}
 // const tutorialButton = document.body.querySelector('#tutorialButton');
 // const tutorialArray = document.body.querySelectorAll(".tutorial");
 // const tutorialDisplay = () => {
@@ -481,4 +499,4 @@ document.addEventListener('keyup', keyUp)
 // }
 
 // tutorialButton.addEventListener('click', tutorialDisplay);
-// gameStartButton.addEventListener('click', gameStart);
+gameStartButton.addEventListener('click', gameStart);
