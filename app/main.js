@@ -107,8 +107,7 @@ function Enemy() {
 }
 
 let enemy = new Enemy();
-let enemy1 = new Enemy();
-let enemy2 = new Enemy();
+
 
 // const enemy = {
 //     x : Math.random()*1000,
@@ -118,6 +117,14 @@ let enemy2 = new Enemy();
 //     color : '#FF0000',
 //     gravity : Math.random()*5
 // }
+const bigBoss = {
+    x : Math.random()*1000,
+    y : -1000,
+    w : 400,
+    h : 250,
+    color : '#393e46',
+    gravity: 2,
+}
 
 const exp = {
     x : Math.random()*1000,
@@ -198,6 +205,21 @@ const enemyHitDetect = () => {
     }
 }
 
+const bigBossHitDetect = () => {
+    if (
+        bigBoss.x + 400 > player.x  && bigBoss.x < player.x + 100 &&
+        bigBoss.y  > player.y  && bigBoss.y - 250 < player.y + 100
+
+        ) {
+
+        bigBoss.y = -1500
+        bigBoss.x = Math.random()*1000
+        player.health -= 100
+        console.log(player.health)
+
+    }
+}
+
 const expHitDetect = () => {
     if (
         exp.x  > player.x  && exp.x < player.x + 100 &&
@@ -265,11 +287,11 @@ const newPos = () => {
     player.x += player.dx;
     player.y += player.dy;
     player.y += player.gravity
-
     enemy.y += enemy.gravity
     exp.y += exp.gravity
     health.y += health.gravity
     food.y += food.gravity
+    bigBoss.y += bigBoss.gravity
 
     if (enemy.y > gameScreen.height-75) {
         enemy.y = -10
@@ -287,10 +309,15 @@ const newPos = () => {
         food.y = -10
         food.x = Math.random() * 1000
     }
+    else if (bigBoss.y > gameScreen.height-75) {
+        bigBoss.y = - 2000
+        bigBoss.x = Math.random() * 1000
+    }
     
     detectWalls();
     detectFloor();
     jumpCeiling();
+    bigBossHitDetect();
     enemyHitDetect();
     expHitDetect();
     healthHitDetect();
@@ -306,12 +333,14 @@ const update = () => {
     // created screenDraw function in our draw section. 
     screenDraw();
     
-    newPos();
     drawRect(enemy.x, enemy.y, enemy.w, enemy.h, enemy.color);
     drawRect(exp.x, exp.y, exp.w, exp.h, exp.color);
     drawRect(health.x, health.y, health.w, health.h, health.color);
     drawRect(food.x, food.y, food.w, food.h, food.color);
+    drawRect(bigBoss.x, bigBoss.y, bigBoss.w, bigBoss.h, bigBoss.color);
     
+    newPos();
+
     drawPlayer();
     
     gameEssentials();
@@ -322,6 +351,8 @@ const update = () => {
     console.log(player.health)
     // console.log(enemy.x)
     
+
+
     requestAnimationFrame(update);
     // testing to see if our update function is looping properly
     // console.log('new frame is running!')
