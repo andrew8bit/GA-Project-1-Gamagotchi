@@ -1,12 +1,12 @@
 body {
     text-align: center;
     background-color: #dfe0df;
+    /* background-color: #bbf1fa; */
     margin:0;
+    font-family: 'Roboto Mono', monospace;
 }
 
-span {
-    padding:2em;
-}
+
 
 .sprite {
     /* this will remove our character from the side, since we want him to display visibily in our game screen. */
@@ -28,14 +28,42 @@ span {
 
 #gameBody {
     background-color: #bbf1fa;
+    background-position: center;
+
 }
 
 #gameDescription {
     background-color: #393e46;
     color: white;
     font-size: 16px;
+    padding: 1em;
+    padding-bottom: 6em;
 }
 
 #game {
+    display:none;
+}
+
+#tutorialButton {
+    margin: 1em;
+}
+
+#controlsDesc {
+    display:none;
+}
+
+#damageDesc {
+    display:none;
+}
+
+#yellowDesc {
+    display:none;
+}
+
+#orangeDesc {
+    display:none;
+}
+
+#warningDesc {
     display:none;
 }

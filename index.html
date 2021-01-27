@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GAMOGATCHI</title>
     <link href="style/style.css" rel="stylesheet"/>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono&display=swap" rel="stylesheet">
     <script defer src="app/main.js"></script>
 </head>
 <body>
@@ -15,13 +17,16 @@
         </div>
 
         <div id = "gameDescription">
-        <p>Click your gatchi egg to start!</p>
-        <p>Keep your gatchi alive by dodging the red squares!</p>
-        <p>Feed your gatchi with orange squares!</p>
-        <p>Don't let your gatchi go hungry! </p>
-        <p>Yellow squares gives your gatchi exp</p>
-        <p>What happens when your gatchi reaches 3000 exp?</p>
-        <p>Be careful of the black box!</p>
+        <p start>Click your gatchi egg to start!</p>
+        <button id = 'tutorialButton'>TUTORIAL</button>
+        <br />
+        <p>
+        <div class = "tutorial" id = "controlsDesc">Use the arrow keys or WASD to move your gatchi</span>
+        <div class = "tutorial" id = "damageDesc">Keep your gatchi alive by dodging the <span style = 'color: red'>red</span> squares! <p>Give him life with the <span style = 'color: green'>green</span> squares!</span></p>
+        <div class = "tutorial" id = "orangeDesc">Feed your gatchi with <span style = 'color: orange'>orange</span> squares! <p>Don't let your gatchi go hungry!</span></p>
+        <div class = "tutorial" id = "yellowDesc"><span style = 'color: yellow'>Yellow</span> squares gives your gatchi exp. <p>What happens when your gatchi reaches 3000 exp?</span></p>
+        <div class = "tutorial" id = "warningDesc">WARNING: DON'T LET YOUR GATCHI GET CRUSHED</span>
+        </p>
 
         </div>
 

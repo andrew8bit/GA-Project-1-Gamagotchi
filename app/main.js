@@ -120,6 +120,7 @@ let enemy = new Enemy();
 //     color : '#FF0000',
 //     gravity : Math.random()*5
 // }
+
 const bigBoss = {
     x : Math.random()*1000,
     y : -1000,
@@ -135,7 +136,7 @@ const exp = {
     w : 25,
     h : 25,
     color : '#FFF000',
-    gravity : Math.random()*5
+    gravity : 1 + Math.random()*5
 }
 const health = {
     x : Math.random()*1000,
@@ -143,7 +144,7 @@ const health = {
     w : 25,
     h : 25,
     color : '#00FF00',
-    gravity : Math.random()*5
+    gravity : 1 + Math.random()*5
 }
 const food = {
     x : Math.random()*1000,
@@ -151,7 +152,7 @@ const food = {
     w : 25,
     h : 25,
     color : '#FFA500',
-    gravity : Math.random()*5
+    gravity : 1 + Math.random()*5
 }
 const drawRect = (x,y,w,h,color) => {
     ctx.beginPath();
@@ -334,6 +335,24 @@ const newPos = () => {
 
 }
 
+/***************** WIN / LOSS CONDITIONS **********************/
+
+const winLossCheck = () => {
+    if (player.exp >= 2000) {
+        cancelAnimationFrame();
+        // toggle the win sceen
+    }
+    else if (player.health <= 0 || player.hunger <=0) {
+        currentSpriteFrame = 7;
+        setIndex = 0;
+        cancelAnimationFrame();
+        // toggle the losing winnin screen
+    }
+    else if (player.hunger <= 0) {
+        cancelAnimationFrame();
+        // toggle the losing screen hunger
+    }
+}
 /************************ GAME LOOP *************************/
 
 const update = () => {
@@ -354,10 +373,11 @@ const update = () => {
     
     gameEssentials();
 
-    if (player.hunger > 1) {
+    if (player.hunger > 0) {
     player.hunger -= .1
-    }
-    console.log(player.health)
+    } 
+    
+    winLossCheck();
     // console.log(enemy.x)
     
 
@@ -439,4 +459,10 @@ const keyUp = (e) => {
 document.addEventListener('keydown', keyDown) 
 document.addEventListener('keyup', keyUp)
 
-/***************** SOUND EFFECTS **********************/
+/***************** DOM VARIABLES AND SCREENS *******************/
+
+const tutorialButton = body.document.querySelector('#tutorialButton')
+const tutorialArray = body.document.querySelectorAll(".tutorial")
+const tutorialDisplay = () => {
+    
+}
