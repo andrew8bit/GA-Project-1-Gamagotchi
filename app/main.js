@@ -202,28 +202,29 @@ const enemyHitDetect = () => {
 
         enemy.y = -10;
         enemy.x = Math.random()*1000;
+        if (player.health > 0) {
         player.health -= 20;
         // console.log(player.health)
         currentSpriteFrame = 6;
         setIndex = 0;
-        
+        }
     }
 }
 
 const bigBossHitDetect = () => {
     if (
         bigBoss.x + 400 > player.x  && bigBoss.x < player.x + 100 &&
-        bigBoss.y  > player.y  && bigBoss.y - 250 < player.y + 100
+        bigBoss.y + 250  > player.y  && bigBoss.y - 250 < player.y + 100
 
         ) {
-
-        bigBoss.y = -1500;
-        bigBoss.x = Math.random()*1000;
-        player.health -= 100;
+            currentSpriteFrame = 7;
+            setIndex = 0;
+        // bigBoss.y = -1500;
+        // bigBoss.x = Math.random()*1000;
+        if (player.health > 0) {
+        player.health = 0
         // console.log(player.health)
-        currentSpriteFrame = 7;
-        setIndex = 0;
-        
+        }
 
     }
 }
@@ -317,7 +318,7 @@ const newPos = () => {
         food.y = -10
         food.x = Math.random() * 1000
     }
-    else if (bigBoss.y > gameScreen.height-75) {
+    else if (bigBoss.y > gameScreen.height) {
         bigBoss.y = - 2000
         bigBoss.x = Math.random() * 1000
     }
@@ -353,7 +354,7 @@ const update = () => {
     
     gameEssentials();
 
-    if (player.hunger > 0) {
+    if (player.hunger > 1) {
     player.hunger -= .1
     }
     console.log(player.health)
@@ -374,7 +375,7 @@ update();
 
 // the way canvas position is formatted, to the right and down, our value goes up, the left and up, our values go down. 
 const moveRight = () => {
-    player.dx += player.speed * 0.9
+    player.dx += player.speed * 0.8
     currentSpriteFrame = 2
     spriteIndex = 1
 
@@ -384,7 +385,7 @@ const moveRight = () => {
 }
 
 const moveLeft = () => {
-    player.dx -= player.speed * 0.9
+    player.dx -= player.speed * 0.8
     currentSpriteFrame = 3
     spriteIndex = 1
     // for (let i = 0; i < spriteAnimationSet[3].length; i++) {

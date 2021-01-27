@@ -8,13 +8,35 @@
     <script defer src="app/main.js"></script>
 </head>
 <body>
+    <div id = "splashScreen">
+        <p id = "gameTitle">GAMOGATCHI</p>
+        <div id = "gameBody">
+            <img id = "gatchiEgg" src= "images/gatchiEggPink.png" />
+        </div>
+
+        <div id = "gameDescription">
+        <p>Click your gatchi egg to start!</p>
+        <p>Keep your gatchi alive by dodging the red squares!</p>
+        <p>Feed your gatchi with orange squares!</p>
+        <p>Don't let your gatchi go hungry! </p>
+        <p>Yellow squares gives your gatchi exp</p>
+        <p>What happens when your gatchi reaches 3000 exp?</p>
+        <p>Be careful of the black box!</p>
+
+        </div>
+
+
+
+
+    </div>
+    <div id = "game">
     <h1 id = "name">GAMOGATCHI</h1>
     <h3 id = values>HP: <span id="lifePoints">100</span>HNGR: <span id="hungerPoints">100</span>EXP: <span id="expPoints">0</span></h3>
     <canvas id="gameScreen"></canvas>
     
     <img class="sprite" id="gatchiPlayer" src = "images/1 Pink_Monster/Pink_Monster.png" />
     <img class="sprite" id="spriteSheet" src = "images/spritesheetp1.png" />
-
+    </div>
     
     
 </body>
