@@ -20,16 +20,19 @@ const ctx = gameScreen.getContext('2d');
 // index 14 - 19 walkRevFacing
 // index 20 - 27 jumpForwardFacing
 // index 28 - 35 jumpRevFacing 
+// index 37 - hurtAnimation
+// index 42 - deathAnimation
 
 const spriteAnimationSet = 
-[[0, 100, 200, 300], // idleForwardFacing
-[400,500,600, 700], // idleRevFacing
-[800,900,1000,1100,1200,1300], // walkForwardFacing
-[1400,1500,1600,1700,1800,1900], // walkRevFacing
-[2000,2100,2200,2300,2400,2500,2600,2700], // jumpForwardFacing
-[2800,2800,2900,3000,3100,3200,3300,3400,3500] // jumpRevFacing 
+[[0, 100, 200, 300], // idleForwardFacing [0]
+[400,500,600, 700], // idleRevFacing [1]
+[800,900,1000,1100,1200,1300], // walkForwardFacing [2]
+[1400,1500,1600,1700,1800,1900], // walkRevFacing [3]
+[2000,2100,2200,2300,2400,2500,2600,2700], // jumpForwardFacing [4]
+[2800,2800,2900,3000,3100,3200,3300,3400,3500], // jumpRevFacing [5]
+[3700], // hurtAnimation [6]
+[4200] // deathAnimation [7]
 ]
-
 let currentSpriteFrame = 0
 let setIndex = 0  
 // create gatchi player
@@ -197,11 +200,13 @@ const enemyHitDetect = () => {
         enemy.y  > player.y  && enemy.y < player.y + 100
         ) {
 
-        enemy.y = -10
-        enemy.x = Math.random()*1000
-        player.health -= 20
-        console.log(player.health)
-
+        enemy.y = -10;
+        enemy.x = Math.random()*1000;
+        player.health -= 20;
+        // console.log(player.health)
+        currentSpriteFrame = 6;
+        setIndex = 0;
+        
     }
 }
 
@@ -212,10 +217,13 @@ const bigBossHitDetect = () => {
 
         ) {
 
-        bigBoss.y = -1500
-        bigBoss.x = Math.random()*1000
-        player.health -= 100
-        console.log(player.health)
+        bigBoss.y = -1500;
+        bigBoss.x = Math.random()*1000;
+        player.health -= 100;
+        // console.log(player.health)
+        currentSpriteFrame = 7;
+        setIndex = 0;
+        
 
     }
 }
@@ -368,25 +376,27 @@ update();
 const moveRight = () => {
     player.dx += player.speed * 0.9
     currentSpriteFrame = 2
-    spriteIndex = 0
+    spriteIndex = 1
 
-    for (let i = 0; i < spriteAnimationSet[2].length; i++) {
-        spriteIndex = spriteAnimationSet[2][i]
-    }
+    // for (let i = 0; i < spriteAnimationSet[2].length; i++) {
+    //     spriteIndex = spriteAnimationSet[2][i]
+    // }
 }
 
 const moveLeft = () => {
     player.dx -= player.speed * 0.9
     currentSpriteFrame = 3
-    spriteIndex = 0
-    for (let i = 0; i < spriteAnimationSet[3].length; i++) {
-        spriteIndex = spriteAnimationSet[3][i] 
-    }
+    spriteIndex = 1
+    // for (let i = 0; i < spriteAnimationSet[3].length; i++) {
+    //     spriteIndex = spriteAnimationSet[3][i] 
+    // }
 }
 
 const jump = () => {
     player.dy -= player.speed 
     player.jumping = 'true'
+    currentSpriteFrame = 5
+    spriteIndex = 3
 }
 
 // we use the event, because we want to target the key the user input
