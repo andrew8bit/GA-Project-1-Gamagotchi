@@ -1,15 +1,41 @@
-// things to check in game development are timing, physics, logic. 
+///////////////////////////////////////////////////////////////////////////////////////////////////////////
+//      ######      ###    ##     ##    ###     ######    #######  ########  ######  ##     ## ####      //
+//     ##    ##    ## ##   ###   ###   ## ##   ##    ##  ##     ##    ##    ##    ## ##     ##  ##       //
+//     ##         ##   ##  #### ####  ##   ##  ##        ##     ##    ##    ##       ##     ##  ##       //
+//     ##   #### ##     ## ## ### ## ##     ## ##   #### ##     ##    ##    ##       #########  ##       //
+//     ##    ##  ######### ##     ## ######### ##    ##  ##     ##    ##    ##       ##     ##  ##       //
+//     ##    ##  ##     ## ##     ## ##     ## ##    ##  ##     ##    ##    ##    ## ##     ##  ##       //
+//      ######   ##     ## ##     ## ##     ##  ######    #######     ##     ######  ##     ## ####      //
+///////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+//********************************************************************************************************/
+//***********************************  VARIABLES AND DOM ELEMENTS  ***************************************/
+//********************************************************************************************************/
+
+// DEFINING OUR GAME SCREEN AND CONTEXT. 
 const gameScreen = document.querySelector("#gameScreen");
 gameScreen.width = 1000;
 gameScreen.height = 500;
-// ctx is short for context - standard practice. 
 const ctx = gameScreen.getContext('2d');
 
-/****************** SPRITE ANIMATIONS  ******************************/
-// const playerImage = document.querySelector("#gatchiPlayer")
-// this is where we declare all of our sprites
-// we moved all our sprites into one long spritesheet. 
-// srctotalX = 3604
+// DOM ELEMENTS TO TOGGLE SCREEN
+const gameStartButton = document.body.querySelector('#gatchiEgg');
+const splashScreen = document.body.querySelector('#splashScreen');
+const gameDisplay = document.body.querySelector('#gameDiv');
+const winScreenDisplay = document.body.querySelector('#winScreen');
+const loseScreenDisplay = document.body.querySelector('#loseScreen');
+const retryButton = document.body.querySelector('#retry')
+const tutorialButton = document.body.querySelector('#tutorialButton');
+const tutorialDesc = document.body.querySelector("#tutorialDesc");
+
+// DOM ELEMENTS TO CHANGE THE VALUE DISPLAYED
+const hpDisplay = document.querySelector('#lifePoints');
+const hngrDisplay = document.querySelector('#hungerPoints');
+const expDisplay = document.querySelector('#expPoints');
+
+//***************************************  SPRITE ANIMATIONS  *********************************************/
+
+// srctotalX = 4604
 // srctotaly = 100
 // totalsprites = 46
 // width of each sprite is roughly 100
@@ -33,73 +59,36 @@ const spriteAnimationSet =
 [3700], // hurtAnimation [6]
 [4300] // deathAnimation [7]
 ]
-let currentSpriteFrame = 0
-let setIndex = 0  
-// create gatchi player
+
+let currentSpriteFrame = 0 // the first index of our spriteAnimationArray
+let setIndex = 0 // the second index of our spriteAnimationArray
+
+//********************************************************************************************************/
+//***********************************************  OBJECTS  **********************************************/
+//********************************************************************************************************/
+
+// Defining our Player object
 const player = {
-    // we are going to define game elements
     health:100,
     exp:0,
-    hunger:100,
-    // width, height, and position of player;
-    w:100,
-    h:100,
-    // this makes our image center as we take both sides of width and height into account. 
-    x: 350,
-    y: 350,
-    // we set relative position to 0 for now, as controller input will change these values
-    dx: 0,
-    dy: 0,
-    // added a speed value so we can update our position in our controller section.
-    speed: 15,
-    // added this jumping boolean so we can force it to only jump once. 
+    hunger:100, 
+    w:100, // width 
+    h:100, // height
+    x: 350, // pos x
+    y: 350, // pos y
+    dx: 0, // relative x 
+    dy: 0, // relative y
+    speed: 15, // what we change our relative position by
     jumping:'false',
-    gravity: 6,
-    
-    // // we needed to store the images into this player object, our draw function has no relation to this player currently 
-    // images: {} - we don't need thisn anymore because we put the player x and y into the draw function instead 
-    
+    gravity: 6, // what forces player to come down  
 }
 
+// Player image
 const images = {}
-// creates a new image 
 images.player = new Image();
 images.player.src='/images/spritesheetp1.png';
 
-/****************************** SOUND EFFECTS ************************************/
-
-
-/************************* DEFINED OUR DRAW FUNCTIONS  **********************/
-
-// creating our game screen
-// rect (x , y, width, height)
-const screenDraw = () => { 
-    ctx.beginPath();
-    ctx.rect(0,0,gameScreen.width, gameScreen.height);
-    ctx.fillStyle = "#bbf1fa"
-    ctx.fill();
-    ctx.closePath();
-
-    ctx.beginPath();
-    ctx.rect(0,450,gameScreen.width, 50);
-    ctx.fillStyle = "#393e46"
-    ctx.fill();
-    ctx.closePath();
-}
-
-
-// creating a function to draw our gatchi
-// we are getting the images from our sprite sheet, and drawing it to our canvas. 
-const drawPlayer = () => {
-    // ctx drawImage method takes in source, and x and y of where we want, width and height, which we already defined.
-    // ctx.drawImage(playerImage, player.x, player.y, player.w, player.h);
-    // we will change our drawPlayer function to take in 9 parameters eventually to animate sprites
-    // (image, sourceX, sourceY, sourceWidth, sourceHeight, player x, player y, player w and player h)
-
-    ctx.drawImage(images.player, spriteAnimationSet[currentSpriteFrame][setIndex], 0, 100, 100, player.x, player.y , player.w, player.h)
-
-}
-
+// Our main enemy object - written using Object Oriented Programing - still need to refactor and learn more. 
 function Enemy() {  
     this.x = Math.random()*1000;
     this.y = -100;
@@ -110,17 +99,7 @@ function Enemy() {
 }
 
 let enemy = new Enemy();
-
-
-// const enemy = {
-//     x : Math.random()*1000,
-//     y : -100,
-//     w : 25,
-//     h : 25,
-//     color : '#FF0000',
-//     gravity : Math.random()*5
-// }
-
+// Our large enemy
 const bigBoss = {
     x : Math.random()*1000,
     y : -1000,
@@ -130,6 +109,7 @@ const bigBoss = {
     gravity: 2,
 }
 
+// EXP OBJECT
 const exp = {
     x : Math.random()*1000,
     y : -100,
@@ -138,6 +118,8 @@ const exp = {
     color : '#FFF000',
     gravity : 1 + Math.random()*5
 }
+
+// HP UP OBJECT
 const health = {
     x : Math.random()*1000,
     y : -100,
@@ -146,6 +128,8 @@ const health = {
     color : '#00FF00',
     gravity : 1 + Math.random()*5
 }
+
+// FOOD OBJECT
 const food = {
     x : Math.random()*1000,
     y : -100,
@@ -154,16 +138,45 @@ const food = {
     color : '#FFA500',
     gravity : 1 + Math.random()*5
 }
+
+//********************************************************************************************************/
+//*********************************************  FUNCTIONS  **********************************************/
+//********************************************************************************************************/
+
+// drawing our Game Screen
+
+const screenDraw = () => { 
+    // background
+    ctx.beginPath();
+    // rect (x , y, width, height)
+    ctx.rect(0,0,gameScreen.width, gameScreen.height);
+    ctx.fillStyle = "#bbf1fa"
+    ctx.fill();
+    ctx.closePath();
+    // floor
+    ctx.beginPath();
+    // rect (x , y, width, height)
+    ctx.rect(0,450,gameScreen.width, 50);
+    ctx.fillStyle = "#393e46"
+    ctx.fill();
+    ctx.closePath();
+}
+// drawing our Player
+const drawPlayer = () => {
+    // 9 parameters
+    // (image, sourceX, sourceY, sourceWidth, sourceHeight, player x, player y, player w and player h)
+    ctx.drawImage(images.player, spriteAnimationSet[currentSpriteFrame][setIndex], 0, 100, 100, player.x, player.y , player.w, player.h)
+}
+// drawing our Objects 
 const drawRect = (x,y,w,h,color) => {
     ctx.beginPath();
     ctx.fillStyle = color;
     ctx.fillRect(x,y,w,h)
-    // console.log('something appeared!')
 }
 
+/************************************* OBJECT COLLISION AND HIT DETECTION ********************************/
 
-/****************** OBJECT COLLISION DETECTION *************/
-// We are going to work on detecting the walls and running this function later by running if statements.
+// DETECT WALLS
 const detectWalls = () => {
     // Because of our canvas, we know the left side is at x 0 and the right side will be gameScreen.width. 
     // LEFT WALL 
@@ -176,7 +189,7 @@ const detectWalls = () => {
     }
 }
 
-// We are going to detect the floors because character keeps falling when adding gravity 
+// DETECT FLOOR
 const detectFloor = () => {
     if (player.y > gameScreen.height - 150) {
         player.y = gameScreen.height - 150
@@ -185,8 +198,7 @@ const detectFloor = () => {
     }
 }
 
-// We are going to create an invisible ceiling for our character to prevent us from holding the up key and flying.
-// I do not know if this is a smart work around. 
+// CEILING FOR OUR PLAYER
 const jumpCeiling = () => {
     if (player.y < gameScreen.height * (1/3)) {
         player.y = gameScreen.height * (1/3)
@@ -194,7 +206,7 @@ const jumpCeiling = () => {
     }
 }
 
-
+// RED SQUARE VS PLAYER DETECTION
 const enemyHitDetect = () => {
     if (
         enemy.x  > player.x  && enemy.x < player.x + 100 &&
@@ -212,6 +224,7 @@ const enemyHitDetect = () => {
     }
 }
 
+// BLACK SQUARE VS PLAYER DETECTION
 const bigBossHitDetect = () => {
     if (
         bigBoss.x + 400 > player.x  && bigBoss.x < player.x + 100 &&
@@ -230,6 +243,7 @@ const bigBossHitDetect = () => {
     }
 }
 
+// YELLOW SQUARE VS PLAYER DETECTION
 const expHitDetect = () => {
     if (
         exp.x  > player.x  && exp.x < player.x + 100 &&
@@ -242,6 +256,7 @@ const expHitDetect = () => {
     }
 }
 
+// GREEN SQUARE VS PLAYER DETECTION
 const healthHitDetect = () => {
     if (
         health.x  > player.x  && health.x < player.x + 100 &&
@@ -255,6 +270,7 @@ const healthHitDetect = () => {
     }
 }
 
+// ORANGE SQUARE VS PLAYER DETECTION
 const foodHitDetect = () => {
     if (
         food.x  > player.x  && food.x < player.x + 100 &&
@@ -268,32 +284,23 @@ const foodHitDetect = () => {
     }
 }
 
+/****************************************** SCREEN UPDATE FUNCTIONS **************************************/
 
-/****************** UPDATING OUR SCREEN ********************/
-// we are going to update the display located in our HTML. 
-const hpDisplay = document.querySelector('#lifePoints');
-const hngrDisplay = document.querySelector('#hungerPoints');
-const expDisplay = document.querySelector('#expPoints');
-
+// updates the player value to be displayed to user
 const gameEssentials = ()=> {
     hpDisplay.textContent = player.health
     hngrDisplay.textContent = Math.floor(player.hunger)
     expDisplay.textContent = player.exp
 }
 
-
-// these functions updates the screen without our character. This important to look at since it deals with timing in our game,
-// we want out gamescreen to update constantly. 
-
-const clearRect = () => {
+// clears old screen
+const clear = () => {
     ctx.clearRect(0,0, gameScreen.width, gameScreen.height)
 }
-const clear = () => {
-    clearRect(0,0, gameScreen.width, gameScreen.height)
-}
 
-// we're going to add this newPos function in our update function to show our changed position when we update the screen. 
+// sets new position for objects
 const newPos = () => {
+
     player.x += player.dx;
     player.y += player.dy;
     player.y += player.gravity
@@ -307,23 +314,27 @@ const newPos = () => {
         enemy.y = -10
         enemy.x = Math.random() * 1000
     }
+
     else if (exp.y > gameScreen.height-75) {
         exp.y = -10
         exp.x = Math.random() * 1000
     }
+
     else if (health.y > gameScreen.height-75) {
         health.y = -10
         health.x = Math.random() * 1000
     }
+
     else if (food.y > gameScreen.height-75) {
         food.y = -10
         food.x = Math.random() * 1000
     }
+
     else if (bigBoss.y > gameScreen.height) {
         bigBoss.y = - 2000
         bigBoss.x = Math.random() * 1000
     }
-    
+
     detectWalls();
     detectFloor();
     jumpCeiling();
@@ -332,95 +343,64 @@ const newPos = () => {
     expHitDetect();
     healthHitDetect();
     foodHitDetect();
-
 }
 
+/**********************************************  CONTROLLER FUNCTIONS  *************************************/
 
-
-/******************** CONTROLLER  ***************************/
-// we are now making our object move, using event listeners. 
-// we need create a new position for our player by changing our dx and dy, which we previously set to 0. Our dy will not change unless we use the jump function.
-
-// the way canvas position is formatted, to the right and down, our value goes up, the left and up, our values go down. 
 const moveRight = () => {
     player.dx += player.speed * 0.8
     currentSpriteFrame = 2
     spriteIndex = 1
+}
     
-    // for (let i = 0; i < spriteAnimationSet[2].length; i++) {
-        //     spriteIndex = spriteAnimationSet[2][i]
-        // }
-    }
+const moveLeft = () => {
+    player.dx -= player.speed * 0.8
+    currentSpriteFrame = 3
+    spriteIndex = 1
+}
+        
+const jump = () => {
+    player.dy -= player.speed 
+    player.jumping = 'true'
+    currentSpriteFrame = 5
+    spriteIndex = 3
+}
+        
+const keyDown = (e) => {
+
+    if (e.key === 'ArrowRight' || e.key === 'd') {
+    moveRight();
+    } 
+
+    else if (e.key === 'ArrowLeft' || e.key === 'a') {
+    moveLeft();
+    } 
     
-    const moveLeft = () => {
-        player.dx -= player.speed * 0.8
-        currentSpriteFrame = 3
-        spriteIndex = 1
-        // for (let i = 0; i < spriteAnimationSet[3].length; i++) {
-            //     spriteIndex = spriteAnimationSet[3][i] 
-            // }
-        }
-        
-        const jump = () => {
-            player.dy -= player.speed 
-            player.jumping = 'true'
-            currentSpriteFrame = 5
-            spriteIndex = 3
-        }
-        
-        // we use the event, because we want to target the key the user input
-        const keyDown = (e) => {
-            // testing to see if we get an input in our console.
-            // console.log(e.key)
-            // console.log is reading our arrow key presses as 'ArrowRight,left,etc.'
-            if (e.key === 'ArrowRight' || e.key === 'd') {
-                // we're gonna run these functions, that we haven't defined yet. We will define these later up top before we use them.
-                moveRight();
-                
-                
-    } else if (e.key === 'ArrowLeft' || e.key === 'a') {
-        moveLeft();
-        
-        
-    } else if (e.key === 'ArrowUp' && player.jumping === 'false' || e.key === 'w' && player.jumping === 'false') {
-        // we want this function to run on the key press and the state of the player is not currently jumping, to avoid jumping in the air. 
-        jump();
-        
-        
+    else if (e.key === 'ArrowUp' && player.jumping === 'false' || e.key === 'w' && player.jumping === 'false') {
+    jump();
     }
 }
+
 const keyUp = (e) => {
-    // testing to see if we get an input in our console.
-    // console.log(e.key);
-    // since we made our dx and dy the moving factors of our player, we know how to stop it by making it 0. or i hope. 
+
     if (
         e.key === 'ArrowRight' || e.key === 'd' || 
         e.key === 'ArrowLeft' || e.key === 'a' || 
         e.key === 'ArrowUp' || e.key === 'w' 
-        ) {
+    ) {
         player.dx = 0;
         player.dy = 0; 
     }
 }
 
-
-
+// CONTROLLER EVENT LISTENERS
 document.addEventListener('keydown', keyDown) 
 document.addEventListener('keyup', keyUp)
 
-/***************** DOM VARIABLES AND SCREENS *******************/
-const gameStartButton = document.body.querySelector('#gatchiEgg');
-const splashScreen = document.body.querySelector('#splashScreen');
-const gameDisplay = document.body.querySelector('#gameDiv');
-const winScreenDisplay = document.body.querySelector('#winScreen');
-const loseScreenDisplay = document.body.querySelector('#loseScreen');
-const retryButton = document.body.querySelector('#retry')
+/********************************************  SCREEN TOGGLE FUNCTIONS  *************************************/
 
 const gameStart = () => {
-    // splashScreen.style.display = 'none';
-    // gameDisplay.style.display= "";
-    // console.log(gameDisplay)
-    
+
     if (splashScreen.style.display === "none") {
         splashScreen.style.display = "block"
     } else {
@@ -433,10 +413,9 @@ const gameStart = () => {
     }
     update();
 }
-const tutorialButton = document.body.querySelector('#tutorialButton');
-const tutorialDesc = document.body.querySelector("#tutorialDesc");
 
 const tutorialDisplay = () => {
+
     if (tutorialDesc.style.display === "none") {
         tutorialDesc.style.display = "block"
     } else {
@@ -445,6 +424,7 @@ const tutorialDisplay = () => {
 }
 
 const winScreen = () => {
+
     if (gameDisplay.style.display === 'block') {
         gameDisplay.style.display = 'none'
     } else {
@@ -468,13 +448,10 @@ const loseScreen = () => {
         loseScreenDisplay.style.display = 'block'
     } else {
         loseScreenDisplay.style.display = 'block'
-    }
-    console.log('you lost buddy')
-    
+    }   
 }
 
 const retryGame = () => {
-    console.log('trying')
     if (loseScreenDisplay.style.display === 'block') {
         loseScreenDisplay.style.display = 'none'
     } else {
@@ -487,6 +464,7 @@ const retryGame = () => {
     }
   
     cancelAnimationFrame(id)
+    // repositioning object and player values so when we reset, our player object is safe
     player.hunger = 100
     player.health = 100
     player.exp = 0
@@ -497,71 +475,64 @@ const retryGame = () => {
     clear()
 }
 
+// TOGGLE SCREEN EVENT LISTENERS
 retryButton.addEventListener('click', retryGame)
-
 tutorialButton.addEventListener('click', tutorialDisplay);
 gameStartButton.addEventListener('click', gameStart);
-/************************ GAME LOOP *************************/
 
-/***************** WIN / LOSS CONDITIONS **********************/
 
-let id;
+//********************************************************************************************************/
+//*********************************************  GAME LOOP  **********************************************/
+//********************************************************************************************************/
+
+let id; // initializing so our update can have an id to stop
 
 const update = () => {
+    // clears old screen
     clear(); 
-    
-    
-    // our screen was getting deleted previously so now we will add our screen update onto our update function. 
-    // created screenDraw function in our draw section. 
-    screenDraw();
-    
+    // draws current screen
+    screenDraw(); 
+
+    // drawing our objects onto the screen
     drawRect(enemy.x, enemy.y, enemy.w, enemy.h, enemy.color);
     drawRect(exp.x, exp.y, exp.w, exp.h, exp.color);
     drawRect(health.x, health.y, health.w, health.h, health.color);
     drawRect(food.x, food.y, food.w, food.h, food.color);
     drawRect(bigBoss.x, bigBoss.y, bigBoss.w, bigBoss.h, bigBoss.color);
-    
-    newPos();
-    
     drawPlayer();
     
-    gameEssentials();
-    
-    if (player.hunger > 0) {
-        player.hunger -= .1
-    } 
-    
-    // console.log(enemy.x)
-    
-    
-    id = requestAnimationFrame(update);
-    
-    winLossCheck();
-    
+    newPos();
+    gameEssentials(); // updates our game values every frame 
+    hungerStrikes(); 
 
-    // testing to see if our update function is looping properly
-    console.log('new frame is running!')
+    id = requestAnimationFrame(update);
+
+    winLossCheck();
+    // console.log('new frame is running!')
 }
 
+// checks our Win or Loss Condition
 const winLossCheck = () => {
+
     if (player.exp >= 1000) {
     
         cancelAnimationFrame(id);
-        winScreen();
-        console.log('Sanity Check')
-        // toggle the win sceen
+        winScreen(); // toggle the win sceen
     }
+
     else if (player.health <= 0 || player.hunger <=0) {
-        console.log('hello my health is low ')
+
         currentSpriteFrame = 7;
         setIndex = 0;
     
         cancelAnimationFrame(id);
-        loseScreen();
-        
-        
-        // toggle the losing screen
-
+        loseScreen(); // toggle the losing screen
     }
 }
 
+// decrements our player hunger value 
+const hungerStrikes = () => {
+    if (player.hunger > 0) {
+        player.hunger -= .1
+    } 
+}
