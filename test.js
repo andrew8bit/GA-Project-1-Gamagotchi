@@ -514,16 +514,9 @@ const update = () => {
     
     // console.log(enemy.x)
     
-    const requestID = requestAnimationFrame(update);
+    let requestID = requestAnimationFrame(update);
     
     
-    winLossCheck();
-
-    // testing to see if our update function is looping properly
-    console.log('new frame is running!')
-}
-
-const winLossCheck = () => {
     if (player.exp >= 1000) {
         
         cancelAnimationFrame(requestID);
@@ -548,5 +541,35 @@ const winLossCheck = () => {
         
         // toggle the losing screen hunger
     }
+
+    // testing to see if our update function is looping properly
+    console.log('new frame is running!')
 }
+
+// const winLossCheck = () => {
+//     if (player.exp >= 1000) {
+        
+//         cancelAnimationFrame(requestID);
+//         winScreen();
+//         console.log('Sanity Check')
+//         // toggle the win sceen
+//     }
+//     else if (player.health <= 0 || player.hunger <=0) {
+//         currentSpriteFrame = 7;
+//         setIndex = 0;
+//         cancelAnimationFrame(requestID);
+//         loseScreen();
+        
+        
+//         // toggle the losing hurt screen
+//     }
+//     else if (player.hunger <= 0) {
+//         currentSpriteFrame = 7;
+//         setIndex = 0;
+//         cancelAnimationFrame(requestID);
+//         loseScreen();
+        
+        // toggle the losing screen hunger
+//     }
+// }
 // update();

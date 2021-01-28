@@ -447,36 +447,45 @@ const tutorialDisplay = () => {
 const winScreen = () => {
     if (gameDisplay.style.display === 'block') {
         gameDisplay.style.display = 'none'
-    } else gameDisplay.style.display = 'block'
-
+    } else {
+        gameDisplay.style.display = 'block'
+    }
     if (winScreenDisplay.style.display === "none") {
         winScreenDisplay.style.display = 'block'
-    } else winScreenDisplay.style.display = 'none'
+    } else {
+        winScreenDisplay.style.display = 'none'
+    }
 }
 
 const loseScreen = () => {
     if (gameDisplay.style.display === 'block') {
         gameDisplay.style.display = 'none'
     } else {
-        gameDisplay.style.display = 'block'
+        gameDisplay.style.display = 'none'
     }
 
     if (loseScreenDisplay.style.display === "none") {
         loseScreenDisplay.style.display = 'block'
     } else {
-        loseScreenDisplay.style.display = 'none'
+        loseScreenDisplay.style.display = 'block'
     }
+    console.log('you lost buddy')
     
 }
 
 const retryGame = () => {
-    if (loseScreenDisplay.style.display ==='block') {
+    console.log('trying')
+    if (loseScreenDisplay.style.display === 'block') {
         loseScreenDisplay.style.display = 'none'
-    } else loseScreenDisplay.style.display = 'block'
-    if (gameDisplay.Display.style === 'none') {
+    } else {
+        loseScreenDisplay.style.display = 'none'
+    }
+    if (gameDisplay.style.display === 'none') {
         gameDisplay.style.display = "block"
-    } else 
-;
+    } else {
+        gameDisplay.style.display = 'block'
+    }
+update()
 }
 
 retryButton.addEventListener('click', retryGame)
@@ -487,6 +496,7 @@ gameStartButton.addEventListener('click', gameStart);
 
 /***************** WIN / LOSS CONDITIONS **********************/
 
+let id;
 
 const update = () => {
     clear(); 
@@ -509,15 +519,16 @@ const update = () => {
     gameEssentials();
     
     if (player.hunger > 0) {
-        player.hunger -= .1
+        player.hunger -= 1
     } 
     
     // console.log(enemy.x)
     
-    const requestID = requestAnimationFrame(update);
     
+    id = requestAnimationFrame(update);
     
     winLossCheck();
+    
 
     // testing to see if our update function is looping properly
     console.log('new frame is running!')
@@ -525,28 +536,23 @@ const update = () => {
 
 const winLossCheck = () => {
     if (player.exp >= 1000) {
-        
-        cancelAnimationFrame(requestID);
+        console.log(id)
+        window.cancelAnimationFrame(id);
         winScreen();
         console.log('Sanity Check')
         // toggle the win sceen
     }
     else if (player.health <= 0 || player.hunger <=0) {
+        console.log('hello my health is low ')
         currentSpriteFrame = 7;
         setIndex = 0;
-        cancelAnimationFrame(requestID);
+        console.log(id)
+        window.cancelAnimationFrame(id);
         loseScreen();
         
         
-        // toggle the losing hurt screen
-    }
-    else if (player.hunger <= 0) {
-        currentSpriteFrame = 7;
-        setIndex = 0;
-        cancelAnimationFrame(requestID);
-        loseScreen();
-        
-        // toggle the losing screen hunger
+        // toggle the losing screen
+
     }
 }
-// update();
+
