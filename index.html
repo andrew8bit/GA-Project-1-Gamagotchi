@@ -20,13 +20,13 @@
         <p id = "start">Click your gatchi egg to start!</p>
         <button id = 'tutorialButton'>TUTORIAL</button>
         <br />
-        <p>
-        <div class = "tutorial" id = "controlsDesc">Use the arrow keys or WASD to move your gatchi</span></div>
-        <div class = "tutorial" id = "damageDesc">Keep your gatchi alive by dodging the <span style = 'color: red'>red</span> squares! <p>Give him life with the <span style = 'color: green'>green</span> squares!</span></p></div>
-        <div class = "tutorial" id = "orangeDesc">Feed your gatchi with <span style = 'color: orange'>orange</span> squares! <p>Don't let your gatchi go hungry!</span></p></div>
-        <div class = "tutorial" id = "yellowDesc"><span style = 'color: yellow'>Yellow</span> squares gives your gatchi exp. <p>What happens when your gatchi reaches 3000 exp?</span></p></div>
-        <div class = "tutorial" id = "warningDesc">WARNING: DON'T LET YOUR GATCHI GET CRUSHED</span></div>
-        </p>
+        <div id = "tutorialDesc">
+        <div class = "tutorial" id = "controlsDesc">Use the arrow keys or WASD to move your gatchi</div>
+        <div class = "tutorial" id = "damageDesc">Keep your gatchi alive by dodging the <span style = 'color: red'>red</span> squares! <p>Give him life with the <span style = 'color: green'>green</span> squares!</p></div>
+        <div class = "tutorial" id = "orangeDesc">Feed your gatchi with <span style = 'color: orange'>orange</span> squares! <p>Don't let your gatchi go hungry!</p></div>
+        <div class = "tutorial" id = "yellowDesc"><span style = 'color: yellow'>Yellow</span> squares gives your gatchi exp. <p>What happens when your gatchi reaches 3000 exp?</p></div>
+        <div class = "tutorial" id = "warningDesc">WARNING: DON'T LET YOUR GATCHI GET CRUSHED</div>
+        </div>
 
         </div>
     </div>
@@ -34,10 +34,25 @@
     <div id = "gameDiv">
     <h1 id = "name">GAMOGATCHI</h1>
     <h3 id = values>HP: <span id="lifePoints">100</span>HNGR: <span id="hungerPoints">100</span>EXP: <span id="expPoints">0</span></h3>
-    <canvas id="gameScreen"></canvas>
+    <canvas id = "gameScreen"></canvas>
     
-    <img class="sprite" id="gatchiPlayer" src = "images/1 Pink_Monster/Pink_Monster.png" />
     <img class="sprite" id="spriteSheet" src = "images/spritesheetp1.png" />
+    </div>
+
+    <div id = "winScreen">
+        <div id = "winScreenContent">
+        <p>WHATS THIS?</p>
+
+        <img id = "evolution" src = "images/unnamed.png">
+
+        <p>IT LOOKS LIKE YOUR GATCHI IS EVOLVING!</p>
+        </div>
+    </div>
+
+    <div id = "loseScreen">
+        <p> OH NO. YOUR GATCHI DIED!</p>
+        <p> REMEMBER TO KEEP YOUR GATCHI ALIVE THIS TIME.</p>
+        <button id = "retry">RETRY</button>
     </div>
     
     

@@ -31,7 +31,7 @@ const spriteAnimationSet =
 [2000,2100,2200,2300,2400,2500,2600,2700], // jumpForwardFacing [4]
 [2800,2800,2900,3000,3100,3200,3300,3400,3500], // jumpRevFacing [5]
 [3700], // hurtAnimation [6]
-[4200] // deathAnimation [7]
+[4300] // deathAnimation [7]
 ]
 let currentSpriteFrame = 0
 let setIndex = 0  
@@ -338,7 +338,7 @@ const newPos = () => {
 /***************** WIN / LOSS CONDITIONS **********************/
 
 const winLossCheck = () => {
-    if (player.exp >= 2000) {
+    if (player.exp >= 1000) {
         
         cancelAnimationFrame(requestID);
         console.log('Sanity Check')
@@ -359,6 +359,123 @@ const winLossCheck = () => {
         // toggle the losing screen hunger
     }
 }
+
+/******************** CONTROLLER  ***************************/
+// we are now making our object move, using event listeners. 
+// we need create a new position for our player by changing our dx and dy, which we previously set to 0. Our dy will not change unless we use the jump function.
+
+// the way canvas position is formatted, to the right and down, our value goes up, the left and up, our values go down. 
+const moveRight = () => {
+    player.dx += player.speed * 0.8
+    currentSpriteFrame = 2
+    spriteIndex = 1
+    
+    // for (let i = 0; i < spriteAnimationSet[2].length; i++) {
+        //     spriteIndex = spriteAnimationSet[2][i]
+        // }
+    }
+    
+    const moveLeft = () => {
+        player.dx -= player.speed * 0.8
+        currentSpriteFrame = 3
+        spriteIndex = 1
+        // for (let i = 0; i < spriteAnimationSet[3].length; i++) {
+            //     spriteIndex = spriteAnimationSet[3][i] 
+            // }
+        }
+        
+        const jump = () => {
+            player.dy -= player.speed 
+            player.jumping = 'true'
+            currentSpriteFrame = 5
+            spriteIndex = 3
+        }
+        
+        // we use the event, because we want to target the key the user input
+        const keyDown = (e) => {
+            // testing to see if we get an input in our console.
+            // console.log(e.key)
+            // console.log is reading our arrow key presses as 'ArrowRight,left,etc.'
+            if (e.key === 'ArrowRight' || e.key === 'd') {
+                // we're gonna run these functions, that we haven't defined yet. We will define these later up top before we use them.
+                moveRight();
+                
+                
+    } else if (e.key === 'ArrowLeft' || e.key === 'a') {
+        moveLeft();
+        
+        
+    } else if (e.key === 'ArrowUp' && player.jumping === 'false' || e.key === 'w' && player.jumping === 'false') {
+        // we want this function to run on the key press and the state of the player is not currently jumping, to avoid jumping in the air. 
+        jump();
+        
+        
+    }
+}
+const keyUp = (e) => {
+    // testing to see if we get an input in our console.
+    // console.log(e.key);
+    // since we made our dx and dy the moving factors of our player, we know how to stop it by making it 0. or i hope. 
+    if (
+        e.key === 'ArrowRight' || e.key === 'd' || 
+        e.key === 'ArrowLeft' || e.key === 'a' || 
+        e.key === 'ArrowUp' || e.key === 'w' 
+        ) {
+        player.dx = 0;
+        player.dy = 0; 
+    }
+}
+
+
+
+document.addEventListener('keydown', keyDown) 
+document.addEventListener('keyup', keyUp)
+
+/***************** DOM VARIABLES AND SCREENS *******************/
+const gameStartButton = document.body.querySelector('#gatchiEgg');
+const splashScreen = document.body.querySelector('#splashScreen');
+const gameDisplay = document.body.querySelector('#gameDiv');
+const winScreenDisplay = document.body.querySelector('#winScreen')
+const loseScreenDisplay = document.body.querySelector('#loseScreen')
+
+const gameStart = () => {
+    // splashScreen.style.display = 'none';
+    // gameDisplay.style.display= "";
+    // console.log(gameDisplay)
+    
+    if (splashScreen.style.display === "none") {
+        splashScreen.style.display = "block"
+    } else {
+        splashScreen.style.display = "none"
+    }
+    if (gameDisplay.style.display === "block") {
+        gameDisplay.style.display = "none"
+    } else {
+        gameDisplay.style.display = "block"
+    }
+    update();
+}
+const tutorialButton = document.body.querySelector('#tutorialButton');
+const tutorialDesc = document.body.querySelector("#tutorialDesc");
+
+const tutorialDisplay = () => {
+    if (tutorialDesc.style.display === "none") {
+        tutorialDesc.style.display = "block"
+    } else {
+        tutorialDesc.style.display = "none"
+    }
+}
+
+const winScreen = () => {
+
+}
+
+const loseScreen = () => {
+
+}
+
+tutorialButton.addEventListener('click', tutorialDisplay);
+gameStartButton.addEventListener('click', gameStart);
 /************************ GAME LOOP *************************/
 
 const update = () => {
@@ -396,107 +513,3 @@ const update = () => {
 }
 
 // update();
-
-/******************** CONTROLLER  ***************************/
-// we are now making our object move, using event listeners. 
-// we need create a new position for our player by changing our dx and dy, which we previously set to 0. Our dy will not change unless we use the jump function.
-
-// the way canvas position is formatted, to the right and down, our value goes up, the left and up, our values go down. 
-const moveRight = () => {
-    player.dx += player.speed * 0.8
-    currentSpriteFrame = 2
-    spriteIndex = 1
-
-    // for (let i = 0; i < spriteAnimationSet[2].length; i++) {
-    //     spriteIndex = spriteAnimationSet[2][i]
-    // }
-}
-
-const moveLeft = () => {
-    player.dx -= player.speed * 0.8
-    currentSpriteFrame = 3
-    spriteIndex = 1
-    // for (let i = 0; i < spriteAnimationSet[3].length; i++) {
-    //     spriteIndex = spriteAnimationSet[3][i] 
-    // }
-}
-
-const jump = () => {
-    player.dy -= player.speed 
-    player.jumping = 'true'
-    currentSpriteFrame = 5
-    spriteIndex = 3
-}
-
-// we use the event, because we want to target the key the user input
-const keyDown = (e) => {
-    // testing to see if we get an input in our console.
-    // console.log(e.key)
-    // console.log is reading our arrow key presses as 'ArrowRight,left,etc.'
-    if (e.key === 'ArrowRight' || e.key === 'd') {
-        // we're gonna run these functions, that we haven't defined yet. We will define these later up top before we use them.
-        moveRight();
-    
-
-    } else if (e.key === 'ArrowLeft' || e.key === 'a') {
-        moveLeft();
-
-
-    } else if (e.key === 'ArrowUp' && player.jumping === 'false' || e.key === 'w' && player.jumping === 'false') {
-        // we want this function to run on the key press and the state of the player is not currently jumping, to avoid jumping in the air. 
-        jump();
-
-        
-    }
-}
-const keyUp = (e) => {
-    // testing to see if we get an input in our console.
-    // console.log(e.key);
-    // since we made our dx and dy the moving factors of our player, we know how to stop it by making it 0. or i hope. 
-    if (
-        e.key === 'ArrowRight' || e.key === 'd' || 
-        e.key === 'ArrowLeft' || e.key === 'a' || 
-        e.key === 'ArrowUp' || e.key === 'w' 
-    ) {
-        player.dx = 0;
-        player.dy = 0; 
-    }
-}
-
-
-
-document.addEventListener('keydown', keyDown) 
-document.addEventListener('keyup', keyUp)
-
-/***************** DOM VARIABLES AND SCREENS *******************/
-const gameStartButton = document.body.querySelector('#gatchiEgg');
-const splashScreen = document.body.querySelector('#splashScreen');
-const gameDisplay = document.body.querySelector('#gameDiv');
-const gameStart = () => {
-    // splashScreen.style.display = 'none';
-    // gameDisplay.style.display= "";
-    // console.log(gameDisplay)
-
-    if (splashScreen.style.display === "none") {
-        splashScreen.style.display = "block"
-    } else {
-        splashScreen.style.display = "none"
-    }
-    if (gameDisplay.style.display === "block") {
-        gameDisplay.style.display = "none"
-    } else {
-        gameDisplay.style.display = "block"
-    }
-    update();
-}
-// const tutorialButton = document.body.querySelector('#tutorialButton');
-// const tutorialArray = document.body.querySelectorAll(".tutorial");
-// const tutorialDisplay = () => {
-//     console.log('clickedTutorial!')
-//     console.log(tutorialArray[0])
-//     tutorialArray[1].style.display = 'block';
-    
-// }
-
-// tutorialButton.addEventListener('click', tutorialDisplay);
-gameStartButton.addEventListener('click', gameStart);
