@@ -215,7 +215,7 @@ const enemyHitDetect = () => {
 const bigBossHitDetect = () => {
     if (
         bigBoss.x + 400 > player.x  && bigBoss.x < player.x + 100 &&
-        bigBoss.y + 250  > player.y  && bigBoss.y - 250 < player.y + 100
+        bigBoss.y + 250  > player.y  && bigBoss.y < player.y + 100
 
         ) {
             currentSpriteFrame = 7;
@@ -490,6 +490,8 @@ const retryGame = () => {
     player.hunger = 100
     player.health = 100
     player.exp = 0
+    bigBoss.x = Math.random()*1000
+    bigBoss.y = -1000
 
     update()
     clear()
