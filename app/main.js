@@ -448,12 +448,12 @@ const winScreen = () => {
     if (gameDisplay.style.display === 'block') {
         gameDisplay.style.display = 'none'
     } else {
-        gameDisplay.style.display = 'block'
+        gameDisplay.style.display = 'none'
     }
     if (winScreenDisplay.style.display === "none") {
         winScreenDisplay.style.display = 'block'
     } else {
-        winScreenDisplay.style.display = 'none'
+        winScreenDisplay.style.display = 'block'
     }
 }
 
@@ -485,7 +485,14 @@ const retryGame = () => {
     } else {
         gameDisplay.style.display = 'block'
     }
-update()
+  
+    cancelAnimationFrame(id)
+    player.hunger = 100
+    player.health = 100
+    player.exp = 0
+
+    update()
+    clear()
 }
 
 retryButton.addEventListener('click', retryGame)
@@ -519,7 +526,7 @@ const update = () => {
     gameEssentials();
     
     if (player.hunger > 0) {
-        player.hunger -= 1
+        player.hunger -= .1
     } 
     
     // console.log(enemy.x)
@@ -536,8 +543,8 @@ const update = () => {
 
 const winLossCheck = () => {
     if (player.exp >= 1000) {
-        console.log(id)
-        window.cancelAnimationFrame(id);
+    
+        cancelAnimationFrame(id);
         winScreen();
         console.log('Sanity Check')
         // toggle the win sceen
@@ -546,8 +553,8 @@ const winLossCheck = () => {
         console.log('hello my health is low ')
         currentSpriteFrame = 7;
         setIndex = 0;
-        console.log(id)
-        window.cancelAnimationFrame(id);
+    
+        cancelAnimationFrame(id);
         loseScreen();
         
         
