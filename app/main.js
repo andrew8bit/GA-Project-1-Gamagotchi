@@ -63,6 +63,19 @@ const spriteAnimationSet =
 let currentSpriteFrame = 0 // the first index of our spriteAnimationArray
 let setIndex = 0 // the second index of our spriteAnimationArray
 
+/********************************************* SOUND EFFECTS *********************************************/
+
+let audioBackGround = new Audio("sfx/dearly-beloved-main-music.mp3");
+let audio1UP = new Audio("sfx/1UP.mp3")
+let audioCoin = new Audio("sfx/coin.mp3")
+let audioNani = new Audio("sfx/NANI1.mp3")
+let audioEvo = new Audio("sfx/EVOLUTION.mp3")
+let audioHurt = new Audio("sfx/hurt.mp3")
+let audioJump = new Audio("sfx/jumpSound.mp3")
+let audioMunch = new Audio("sfx/munch.mp3")
+let audioEggCrack = new Audio("sfx/eggCrack.mp3")
+let audioMenuPress = new Audio("sfx/menuPress.mp3")
+
 //********************************************************************************************************/
 //***********************************************  OBJECTS  **********************************************/
 //********************************************************************************************************/
@@ -212,7 +225,7 @@ const enemyHitDetect = () => {
         enemy.x  > player.x  && enemy.x < player.x + 100 &&
         enemy.y  > player.y  && enemy.y < player.y + 100
         ) {
-
+        audioHurt.play()
         enemy.y = -10;
         enemy.x = Math.random()*1000;
         if (player.health > 0) {
@@ -249,11 +262,13 @@ const expHitDetect = () => {
         exp.x  > player.x  && exp.x < player.x + 100 &&
         exp.y  > player.y  && exp.y < player.y + 100
         ) {
+        audioCoin.play()
         exp.y = -10
         exp.x = Math.random()*1000
         player.exp += 50
         console.log(player.exp)
     }
+   
 }
 
 // GREEN SQUARE VS PLAYER DETECTION
@@ -265,6 +280,7 @@ const healthHitDetect = () => {
         health.y = -10
         health.x = Math.random()*1000
         if (player.health < 100 && player.health >0 ) {
+        audio1UP.play()
         player.health += 10
         }
     }
@@ -279,6 +295,7 @@ const foodHitDetect = () => {
         food.y = -10
         food.x = Math.random()*1000
         if (player.hunger < 80 && player.hunger > 0) {
+            audioMunch.play()
             player.hunger += 20
         }
     }
@@ -360,10 +377,10 @@ const moveLeft = () => {
 }
         
 const jump = () => {
-    player.dy -= player.speed 
-    player.jumping = 'true'
-    currentSpriteFrame = 5
-    spriteIndex = 3
+    player.dy -= player.speed;
+    player.jumping = 'true';
+    currentSpriteFrame = 5;
+    spriteIndex = 3;
 }
         
 const keyDown = (e) => {
@@ -377,6 +394,7 @@ const keyDown = (e) => {
     } 
     
     else if (e.key === 'ArrowUp' && player.jumping === 'false' || e.key === 'w' && player.jumping === 'false') {
+    audioJump.play();
     jump();
     }
 }
@@ -411,10 +429,14 @@ const gameStart = () => {
     } else {
         gameDisplay.style.display = "block"
     }
+    audioBackGround.play();
+    audioEggCrack.play();
     update();
 }
 
 const tutorialDisplay = () => {
+
+    audioMenuPress.play();
 
     if (tutorialDesc.style.display === "none") {
         tutorialDesc.style.display = "block"
@@ -424,6 +446,8 @@ const tutorialDisplay = () => {
 }
 
 const winScreen = () => {
+
+    audioEvo.play()
 
     if (gameDisplay.style.display === 'block') {
         gameDisplay.style.display = 'none'
@@ -438,6 +462,9 @@ const winScreen = () => {
 }
 
 const loseScreen = () => {
+
+    audioNani.play()
+
     if (gameDisplay.style.display === 'block') {
         gameDisplay.style.display = 'none'
     } else {
@@ -462,7 +489,7 @@ const retryGame = () => {
     } else {
         gameDisplay.style.display = 'block'
     }
-  
+    audioMenuPress.play();
     cancelAnimationFrame(id)
     // repositioning object and player values so when we reset, our player object is safe
     player.hunger = 100
@@ -536,3 +563,18 @@ const hungerStrikes = () => {
         player.hunger -= .1
     } 
 }
+
+//********************************************************************************************************/
+//****************************************  FUTURE DEVELOPMENT   *****************************************/
+//********************************************************************************************************/
+
+/* Would like to rediscuss direction of the game to make an infinite side scroller, or some
+type of platformer. I will have to get more familiar with tile mapping, refine collision detection. 
+Physics can be refined and I would like to refactor this code using object oriented 
+design. Limitations currently is that only 1 instance of the object will appear and function properly.
+Sprite animation can be refined so that the entire sprite sheet is being used. Can change objects into 
+sprites to complete the game. 
+
+As a first project, I have learned enough and satisifed with the MVP for this project. 
+- Andrew Bith 
+*/
