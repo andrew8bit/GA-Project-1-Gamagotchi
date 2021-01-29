@@ -66,15 +66,15 @@ let setIndex = 0 // the second index of our spriteAnimationArray
 /********************************************* SOUND EFFECTS *********************************************/
 
 let audioBackGround = new Audio("/sfx/dearly-beloved-main-music.mp3");
-let audio1UP = new Audio("/sfx/1UP.mp3")
-let audioCoin = new Audio("/sfx/coin.mp3")
-let audioNani = new Audio("/sfx/NANI1.mp3")
-let audioEvo = new Audio("/sfx/EVOLUTION.mp3")
-let audioHurt = new Audio("/sfx/hurt.mp3")
-let audioJump = new Audio("/sfx/jumpSound.mp3")
-let audioMunch = new Audio("/sfx/munch.mp3")
-let audioEggCrack = new Audio("/sfx/eggCrack.mp3")
-let audioMenuPress = new Audio("/sfx/menuPress.mp3")
+let audio1UP = new Audio("sfx/1UP.mp3")
+let audioCoin = new Audio("sfx/coin.mp3")
+let audioNani = new Audio("sfx/NANI1.mp3")
+let audioEvo = new Audio("sfx/EVOLUTION.mp3")
+let audioHurt = new Audio("sfx/hurt.mp3")
+let audioJump = new Audio("sfx/jumpSound.mp3")
+let audioMunch = new Audio("sfx/munch.mp3")
+let audioEggCrack = new Audio("sfx/eggCrack.mp3")
+let audioMenuPress = new Audio("sfx/menuPress.mp3")
 
 //********************************************************************************************************/
 //***********************************************  OBJECTS  **********************************************/
@@ -99,7 +99,7 @@ const player = {
 // Player image
 const images = {}
 images.player = new Image();
-images.player.src='/images/spritesheetp1.png';
+images.player.src='images/spritesheetp1.png';
 
 // Our main enemy object - written using Object Oriented Programing - still need to refactor and learn more. 
 function Enemy() {  
