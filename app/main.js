@@ -65,7 +65,7 @@ let setIndex = 0 // the second index of our spriteAnimationArray
 
 /********************************************* SOUND EFFECTS *********************************************/
 
-let audioBackGround = new Audio("/sfx/dearly-beloved-main-music.mp3");
+let audioBackGround = new Audio("sfx/dearly-beloved-main-music.mp3");
 let audio1UP = new Audio("sfx/1UP.mp3")
 let audioCoin = new Audio("sfx/coin.mp3")
 let audioNani = new Audio("sfx/NANI1.mp3")
