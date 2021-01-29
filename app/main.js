@@ -99,7 +99,7 @@ const player = {
 // Player image
 const images = {}
 images.player = new Image();
-images.player.src='/Users/andrewbith/sei-111/wk-3/Project-1/images/spritesheetp1.png';
+images.player.src='images/spritesheetp1.png';
 
 // Our main enemy object - written using Object Oriented Programing - still need to refactor and learn more. 
 function Enemy() {  
