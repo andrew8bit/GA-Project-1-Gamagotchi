@@ -512,6 +512,34 @@ gameStartButton.addEventListener('click', gameStart);
 //*********************************************  GAME LOOP  **********************************************/
 //********************************************************************************************************/
 
+// decrements our player hunger value 
+const hungerStrikes = () => {
+    if (player.hunger > 0) {
+        player.hunger -= .1
+    } 
+}
+
+
+// checks our Win or Loss Condition
+const winLossCheck = () => {
+
+    if (player.exp >= 1000) {
+    
+        cancelAnimationFrame(id);
+        winScreen(); // toggle the win sceen
+    }
+
+    else if (player.health <= 0 || player.hunger <=0) {
+
+        currentSpriteFrame = 7;
+        setIndex = 0;
+    
+        cancelAnimationFrame(id);
+        loseScreen(); // toggle the losing screen
+    }
+}
+
+
 let id; // initializing so our update can have an id to stop
 
 const update = () => {
@@ -538,31 +566,7 @@ const update = () => {
     // console.log('new frame is running!')
 }
 
-// checks our Win or Loss Condition
-const winLossCheck = () => {
 
-    if (player.exp >= 1000) {
-    
-        cancelAnimationFrame(id);
-        winScreen(); // toggle the win sceen
-    }
-
-    else if (player.health <= 0 || player.hunger <=0) {
-
-        currentSpriteFrame = 7;
-        setIndex = 0;
-    
-        cancelAnimationFrame(id);
-        loseScreen(); // toggle the losing screen
-    }
-}
-
-// decrements our player hunger value 
-const hungerStrikes = () => {
-    if (player.hunger > 0) {
-        player.hunger -= .1
-    } 
-}
 
 //********************************************************************************************************/
 //****************************************  FUTURE DEVELOPMENT   *****************************************/
