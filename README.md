@@ -2,36 +2,31 @@
 ## Your personal pet to keep you motivated while attending GA.
 
 ### Motivation
-Tamagotchi, the once popular handheld digital pet, created in Japan by Akihiro Yokoi of *WIZ* and Aki Maita of *Bandai*, is now coming straight into your computer screen. Usually housed in an egg (**tamago**) where the user would watch (**uotchi**) and take of their pet, became mesmerizingly addicting. I grew up with a tamagotchi when I was a child but unfortunately it kept on dying. So now, I will control and program my own gotchi for Project 1 for General Assembly (GA). 
+Tamagotchi, the once popular handheld digital pet, created in Japan by Akihiro Yokoi of *WIZ* and Aki Maita of *Bandai*, is now coming straight into your computer screen. Usually housed in an egg (**tamago**) where the user would watch (**uotchi**) and take of their pet, became mesmerizingly addicting. I grew up with a tamagotchi when I was a child but unfortunately it kept on dying. So now, I will control and program my own gotchi for Project 1 for General Assembly (GA). As an added twist, we actually control our gotchi.
+
+### Screenshots
+
+![titleScreen][Screen Shot 2021-01-28 at 3.49.34 PM.png]
+![gamePlay][Screen Shot 2021-01-28 at 4.44.50 PM.png]
+![lossScreen][Screen Shot 2021-01-28 at 3.49.51 PM.png]
 
 ### User Stories and Wireframes
-- create a canvas for the screen on where the game will be displayed - game will displayed in a screen and the outside will look like another computer 
-- create a pet object {
-    name: 'userInput'
-    gender: 'userInput'
-    life: '100'
-    hunger: '100'
-    thirst: '100'
-    moodScore: 100
-    mood: 'moderate'
-    sleeping: 'false'
-}
-- create buttons so the user can interact with their pet, certain buttons affect the pet's stats differently
-- create popups for game events
-- creating a setInterval to determine when hunger and thirst goes down. 
-- create a tutorial 
-- [UI](https://www.figma.com/file/izJnHCIEUJLbGKDEGhhpsr/Untitled?node-id=0%3A1)
-### Flow
-- user inputs name and their pet is created
-- timer to decriment life points, determined by their values at that time.
-- user tries to keep their pet alive by feeding and entertaining their pet. 
-- pet evolves when age reaches a certain level. 
+- User loads into splash screen.
+- User clicks and checks tutorial for controls.
+- User collects yellow (exp) squares.
+- User avoids red and large black squares.
+- Collects orange squares to feed your gatchi and green squares to heal your gatchi.  
 ### Technologies & Code Snippets
-- making use of HTML and Javascript
+- Used Cavnas API to draw screen
+- Object collision and hit detection with Javascript 
+- Keyboard controller input controlled by use of the DOM event listeners. 
 ### Credits
-
+- 
 ### Future Developments
-- make sure the game is working proplery
-- focus on styling
-- implementing a type of inventory system, let the pet mine bitcoin as a type of currency system, use bitcoin to buy water and Mcbits to keep your pet alive. Creating a setInterval to manage the currency 
-- implement a random event change that procts when time or certain conditions are met. 
+- Would like to rediscuss direction of the game to make an infinite side scroller, or some type of platformer. 
+- I will have to get more familiar with tile mapping
+- Refine collision detection. 
+- Physics can be refined and I would like to refactor this code using object oriented design. Limitations currently is that only 1 instance of the object will appear and function properly.
+- Sprite animation can be refined so that the entire sprite sheet is being used. Can change objects into sprites to complete the game. 
+- As a first project, I have learned enough and satisifed with the MVP for this project. 
+- Andrew Bith 
