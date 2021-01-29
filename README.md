@@ -6,9 +6,9 @@ Tamagotchi, the once popular handheld digital pet, created in Japan by Akihiro Y
 
 ### Screenshots
 
-![titleScreen][Screen Shot 2021-01-28 at 3.49.34 PM.png]
-![gamePlay][Screen Shot 2021-01-28 at 4.44.50 PM.png]
-![lossScreen][Screen Shot 2021-01-28 at 3.49.51 PM.png]
+![titleScreen](titleScreenScreenshot.png)
+![gamePlay](gamePlayScreenshot.png)
+![lossScreen](lossScreenScreenshot.png)
 
 ### User Stories and Wireframes
 - User loads into splash screen.
