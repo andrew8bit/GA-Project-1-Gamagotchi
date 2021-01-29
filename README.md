@@ -21,7 +21,13 @@ Tamagotchi, the once popular handheld digital pet, created in Japan by Akihiro Y
 - Object collision and hit detection with Javascript 
 - Keyboard controller input controlled by use of the DOM event listeners. 
 ### Credits
-- 
+- https://www.youtube.com/watch?v=gm1QtePAYTM&t=321s
+- https://isaacsukin.com/news/2015/01/detailed-explanation-javascript-game-loops-and-timing
+- https://free-game-assets.itch.io/free-tiny-hero-sprites-pixel-art/download/0VNvQUr3YzkaGIirhoLaBz08HMRRSygl1Ylobvq_
+- https://www.w3schools.com/html/html5_canvas.asp
+- https://spicyyoghurt.com/tutorials/html5-javascript-game-development/collision-detection-physics
+- http://www.javascriptkit.com/javatutors/requestanimationframe.shtml
+- https://www.youtube.com/watch?v=RMmo3SktDJo
 ### Future Developments
 - Would like to rediscuss direction of the game to make an infinite side scroller, or some type of platformer. 
 - I will have to get more familiar with tile mapping
