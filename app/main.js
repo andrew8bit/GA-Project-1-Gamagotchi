@@ -65,16 +65,16 @@ let setIndex = 0 // the second index of our spriteAnimationArray
 
 /********************************************* SOUND EFFECTS *********************************************/
 
-let audioBackGround = new Audio("sfx/dearly-beloved-main-music.mp3");
-let audio1UP = new Audio("sfx/1UP.mp3")
-let audioCoin = new Audio("sfx/coin.mp3")
-let audioNani = new Audio("sfx/NANI1.mp3")
-let audioEvo = new Audio("sfx/EVOLUTION.mp3")
-let audioHurt = new Audio("sfx/hurt.mp3")
-let audioJump = new Audio("sfx/jumpSound.mp3")
-let audioMunch = new Audio("sfx/munch.mp3")
-let audioEggCrack = new Audio("sfx/eggCrack.mp3")
-let audioMenuPress = new Audio("sfx/menuPress.mp3")
+let audioBackGround = new Audio("/sfx/dearly-beloved-main-music.mp3");
+let audio1UP = new Audio("/sfx/1UP.mp3")
+let audioCoin = new Audio("/sfx/coin.mp3")
+let audioNani = new Audio("/sfx/NANI1.mp3")
+let audioEvo = new Audio("/sfx/EVOLUTION.mp3")
+let audioHurt = new Audio("/sfx/hurt.mp3")
+let audioJump = new Audio("/sfx/jumpSound.mp3")
+let audioMunch = new Audio("/sfx/munch.mp3")
+let audioEggCrack = new Audio("/sfx/eggCrack.mp3")
+let audioMenuPress = new Audio("/sfx/menuPress.mp3")
 
 //********************************************************************************************************/
 //***********************************************  OBJECTS  **********************************************/
@@ -91,15 +91,15 @@ const player = {
     y: 350, // pos y
     dx: 0, // relative x 
     dy: 0, // relative y
-    speed: 15, // what we change our relative position by
+    speed: 17, // what we change our relative position by
     jumping:'false',
-    gravity: 6, // what forces player to come down  
+    gravity: 7, // what forces player to come down  
 }
 
 // Player image
 const images = {}
 images.player = new Image();
-images.player.src='images/spritesheetp1.png';
+images.player.src='/images/spritesheetp1.png';
 
 // Our main enemy object - written using Object Oriented Programing - still need to refactor and learn more. 
 function Enemy() {  
@@ -119,7 +119,7 @@ const bigBoss = {
     w : 400,
     h : 250,
     color : '#393e46',
-    gravity: 2,
+    gravity: 4,
 }
 
 // EXP OBJECT
@@ -129,7 +129,7 @@ const exp = {
     w : 25,
     h : 25,
     color : '#FFF000',
-    gravity : 1 + Math.random()*5
+    gravity : 2 + Math.random()*5
 }
 
 // HP UP OBJECT
@@ -139,7 +139,7 @@ const health = {
     w : 25,
     h : 25,
     color : '#00FF00',
-    gravity : 1 + Math.random()*5
+    gravity : 2+ Math.random()*5
 }
 
 // FOOD OBJECT
@@ -149,7 +149,7 @@ const food = {
     w : 25,
     h : 25,
     color : '#FFA500',
-    gravity : 1 + Math.random()*5
+    gravity : 2 + Math.random()*5
 }
 
 //********************************************************************************************************/
@@ -266,7 +266,7 @@ const expHitDetect = () => {
         exp.y = -10
         exp.x = Math.random()*1000
         player.exp += 50
-        console.log(player.exp)
+        
     }
    
 }
@@ -348,7 +348,7 @@ const newPos = () => {
     }
 
     else if (bigBoss.y > gameScreen.height) {
-        bigBoss.y = - 2000
+        bigBoss.y = - 1000
         bigBoss.x = Math.random() * 1000
     }
 
@@ -365,13 +365,13 @@ const newPos = () => {
 /**********************************************  CONTROLLER FUNCTIONS  *************************************/
 
 const moveRight = () => {
-    player.dx += player.speed * 0.8
+    player.dx += player.speed * 0.9
     currentSpriteFrame = 2
     spriteIndex = 1
 }
     
 const moveLeft = () => {
-    player.dx -= player.speed * 0.8
+    player.dx -= player.speed * 0.9
     currentSpriteFrame = 3
     spriteIndex = 1
 }
@@ -515,7 +515,7 @@ gameStartButton.addEventListener('click', gameStart);
 // decrements our player hunger value 
 const hungerStrikes = () => {
     if (player.hunger > 0) {
-        player.hunger -= .1
+        player.hunger -= (1/10)
     } 
 }
 
@@ -541,29 +541,38 @@ const winLossCheck = () => {
 
 
 let id; // initializing so our update can have an id to stop
+let framesPerSecond = 60
 
 const update = () => {
-    // clears old screen
-    clear(); 
-    // draws current screen
-    screenDraw(); 
 
-    // drawing our objects onto the screen
-    drawRect(enemy.x, enemy.y, enemy.w, enemy.h, enemy.color);
-    drawRect(exp.x, exp.y, exp.w, exp.h, exp.color);
-    drawRect(health.x, health.y, health.w, health.h, health.color);
-    drawRect(food.x, food.y, food.w, food.h, food.color);
-    drawRect(bigBoss.x, bigBoss.y, bigBoss.w, bigBoss.h, bigBoss.color);
-    drawPlayer();
+    // we're setting a timeout to only run our animation 60 times per second
+    // this is to cap higher refresh rate screens.
+    setTimeout(function() {
+        // clears old screen
+        clear(); 
+        // draws current screen
+        screenDraw(); 
+        
+        // drawing our objects onto the screen
+        drawRect(enemy.x, enemy.y, enemy.w, enemy.h, enemy.color);
+        drawRect(exp.x, exp.y, exp.w, exp.h, exp.color);
+        drawRect(health.x, health.y, health.w, health.h, health.color);
+        drawRect(food.x, food.y, food.w, food.h, food.color);
+        drawRect(bigBoss.x, bigBoss.y, bigBoss.w, bigBoss.h, bigBoss.color);
+        drawPlayer();
+        
+        newPos();
+        gameEssentials(); // updates our game values every frame 
+        hungerStrikes(); 
+        
+        console.log('new frame running')
+        id = requestAnimationFrame(update);
+        winLossCheck();
     
-    newPos();
-    gameEssentials(); // updates our game values every frame 
-    hungerStrikes(); 
+    }, 1000 / framesPerSecond) // we are capping our animation at 60 frames per second 
 
-    id = requestAnimationFrame(update);
-
-    winLossCheck();
     // console.log('new frame is running!')
+    
 }
 
 
